@@ -154,7 +154,7 @@
     </div>
     <div id="actionselector">
       <div class="charimg"><img id='pfp'></div>
-      <h1 class="nameheader"><span class="characternameheader"></span></h1>
+      <h1 class="nameheader"><i class="fas fa-caret-left caret ca-left"></i><span class="characternameheader"></span><i class="fas fa-caret-right caret ca-right"></i></h1>
       <h1 class="selectorheader">Free Actions</h1>
       <div class="masterycategory freeactions">
         <div class="card selected">
@@ -188,7 +188,7 @@
     </div>
     <div id="builddisplay">
       <div class="charimg2"><img id="pfp2"></div>
-      <h1 class="nameheader"><span class='charname'></span></h1>
+      <h1 class="nameheader"><i class="fas fa-caret-left caret ca-left"></i><span class='charname'></span><i class="fas fa-caret-right caret ca-right"></i></h1>
       <h3 class="selectorheader">Stats</h3>
       <div class="masterycategory first" id="statsdisplay">
         <div class="hpcontainer"><div class='hp'><div class='stat-text'>Health</div><img src='https://terrarp.com/db/tool/health.png'></div></div>
@@ -253,14 +253,15 @@
       <div class="masterycategory" id="masterydisplay"></div>
       <h3 class="selectorheader">Equipment</h3>
       <div class="masterycategory" id="equipmentdisplay">
-        <div class="edisplay weaponrankdisplay"><div class='displaycircle equipment'><img src='https://terrarp.com/db/tool/weapon-rank.png'></div><div class='displaytitle'>Weapon Rank</div></div>
-        <div class="edisplay armorrankdisplay"><div class='displaycircle equipment'><img id="armordisplay"></div><div class='displaytitle'>Armor Rank</div></div>
+        <div class="edisplay weaponrankdisplay"><div class='displaycircle equipment'><img src='https://terrarp.com/db/tool/weapon-rank.png'></div><div class='displaytitle'>Weapon</div></div>
+        <div class="edisplay armorrankdisplay"><div class='displaycircle equipment'><img id="armordisplay"></div><div class='displaytitle'>Armor</div></div>
       </div>
       <div class="masterycategory" id="equipmentdisplay">
         <div class="edisplay armorskilldisplay"><div class="passivecontainer"><span class='armorpassive'></span></div></div>
       </div>
-      <h3 class="selectorheader">Saves and Checks</h3>
-      <div class="actionboxinfo">Click on the small icons at the bottom of the following cards to automatically apply the bonus and type name to the Discord roll code.</div>
+      <h3 class="selectorheader">Saves and Checks 
+<span class="ttip" data-tooltip="Click on the small icons at the bottom of the following cards to automatically apply the bonus and type name to the Discord roll code."><span class="ttip-info"></span><i class="far fa-question-circle tip"></i></span>
+      </h3>
       <div class="masterycategory" id="saveschecks">
         <div class="card"><div class="cardtitle">Saves</div>
           <div class="rollcode">?r save <span class='saveadv'></span><span class='savebonusreplace'>X</span> <span class='reflexmodifiers'></span> # <span class='savereplace'>Type</span> | Character Name | <span class="thrcode">Thread Code</span></div>
@@ -278,8 +279,9 @@
           <div class="togglecontainer"><div class="togglesavechecks" onclick="advantageMastery()">Adv</div> <div class="togglesavechecks" onclick="normalMastery()">Normal</div> <div class="togglesavechecks" onclick="disadvantageMastery()">Dis</div></div>
         </div>
       </div>
-      <h3 class="selectorheader">Actions</h3>
-      <div class="actionboxinfo">Click on the small icons at the bottom of the following cards to automatically apply the rank and mastery name to the Discord roll code. If an action has an Single / AoE option, click on either box to apply their tag.</div>
+      <h3 class="selectorheader">Actions 
+<span class="ttip" data-tooltip="Click on the small icons at the bottom of the following cards to automatically apply the rank and mastery name to the Discord roll code. If an action has an Single / AoE option, click on either box to apply their tag."><span class="ttip-info"></span><i class="far fa-question-circle tip"></i></span>
+      </h3>
       <div class="masterycategory" id="freeactiondisplay">
         <div class="card normal">
           <div class="cardicon aci-attack"></div>
