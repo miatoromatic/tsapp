@@ -846,9 +846,19 @@ ul {
 }
 
 .charimg, .charimg2 {
-  display: none;
+  /*display: none;
   margin: auto;
-  width: 15vw;
+  width: 15vw;*/
+  text-align: center;
+  
+}
+#pfp, #pfp2{
+  border-radius: 50%;
+}
+.nameheader{
+  text-align:center;
+  font-weight:bold;
+  margin: 10px auto 20px auto;
 }
 
 p {
@@ -1220,6 +1230,9 @@ p {
   width: 35px;
   height: 35px;
   margin: 5px;
+}
+.togglesavechecks:hover, .display.masterycircle:hover {
+  opacity: 0.75;
 }
 
 .masteryicon {
