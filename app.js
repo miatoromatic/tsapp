@@ -52,8 +52,8 @@ window.addEventListener('hashchange', function() {
     document.getElementsByClassName("mnamereplace")[0].innerHTML = "Type";
     document.getElementsByClassName("masteryreplace")[0].innerHTML = "MR";
 
-    document.getElementsByClassName("weaponrankdisplay")[0].innerHTML = "<div class='displaycircle equipment'><img src='https://terrarp.com/db/tool/weapon-rank.png'></div><div class='displaytitle'>Weapon Rank</div>";
-    document.getElementsByClassName("armorrankdisplay")[0].innerHTML = "<div class='displaycircle equipment'><img id='armordisplay'></div><div class='displaytitle'>Armor Rank</div>";
+    document.getElementsByClassName("weaponrankdisplay")[0].innerHTML = "<div class='displaycircle equipment'><img src='https://terrarp.com/db/tool/weapon-rank.png'></div><div class='displaytitle'>Weapon</div>";
+    document.getElementsByClassName("armorrankdisplay")[0].innerHTML = "<div class='displaycircle equipment'><img id='armordisplay'></div><div class='displaytitle'>Armor</div>";
     document.getElementsByClassName("passivecontainer")[0].innerHTML = "<span class='armorpassive'></span>";
 
     document.getElementById("masterydisplay").innerHTML = "";
@@ -397,8 +397,8 @@ window.onload = function() {
     document.getElementsByClassName("mnamereplace")[0].innerHTML = "Type";
     document.getElementsByClassName("masteryreplace")[0].innerHTML = "MR";
 
-    document.getElementsByClassName("weaponrankdisplay")[0].innerHTML = "<div class='displaycircle equipment'><img src='https://terrarp.com/db/tool/weapon-rank.png'></div><div class='displaytitle'>Weapon Rank</div>";
-    document.getElementsByClassName("armorrankdisplay")[0].innerHTML = "<div class='displaycircle equipment'><img id='armordisplay'></div><div class='displaytitle'>Armor Rank</div>";
+    document.getElementsByClassName("weaponrankdisplay")[0].innerHTML = "<div class='displaycircle equipment'><img src='https://terrarp.com/db/tool/weapon-rank.png'></div><div class='displaytitle'>Weapon</div>";
+    document.getElementsByClassName("armorrankdisplay")[0].innerHTML = "<div class='displaycircle equipment'><img id='armordisplay'></div><div class='displaytitle'>Armor</div>";
     document.getElementsByClassName("passivecontainer")[0].innerHTML = "<span class='armorpassive'></span>";
 
     document.getElementById("masterydisplay").innerHTML = "";
@@ -1427,7 +1427,7 @@ function displayEquipment() {
     var surgebonus = surge * 20
     var surgeinspire = surge * 5;
     document.getElementsByClassName("armorpassive")[0].innerHTML = "<h4>Surge</h4>";
-    document.getElementsByClassName("passivecontainer")[0].innerHTML += "<b>Light Armor</b><p><b>Surge.</b> Once per thread after rolling, add  " + surgebonus + " to your roll result (applied before modifiers). When using Surge, gain " + surge + " additional revive target(s) and +" + surgeinspire + " to Inspire rolls</p>";
+    document.getElementsByClassName("passivecontainer")[0].innerHTML += "<p><b>Surge.</b> <em>(Light Armor Passive)</em></p><p>Once per thread after rolling, add  " + surgebonus + " to your roll result (applied before modifiers). When using Surge, gain " + surge + " additional revive target(s) and +" + surgeinspire + " to Inspire rolls.</p><p>Type: Surge | Charname in Discord when you use your passive in a thread.</p>";
     if (surge === 0) {
       document.getElementsByClassName("armorskilldisplay")[0].style.display = "none"
     } else {
@@ -1435,7 +1435,7 @@ function displayEquipment() {
     }
   } else if (armorweight === "medium") {
     document.getElementsByClassName("armorpassive")[0].innerHTML = "<h4>Twice</h4>";
-    document.getElementsByClassName("passivecontainer")[0].innerHTML += "<b>Twice.</b><p> Once per thread, you may perform two actions instead of one. 2 standard actions or 1 standard and 1 Special Action.</p>";
+    document.getElementsByClassName("passivecontainer")[0].innerHTML += "<p><b>Twice.</b> <em>(Medium Armor Passive)</em></p><p>Once per thread, you may perform two actions instead of one. 2 standard actions or 1 standard and 1 Special Action.</p><p>Type: Twice | Charname in Discord when you use your passive in a thread.</p>";
     if (parseInt(armorRank) === 0) {
       document.getElementsByClassName("armorskilldisplay")[0].style.display = "none"
     } else {
@@ -1445,7 +1445,7 @@ function displayEquipment() {
     var swind = parseInt(armorRank)
     var swindbonus = swind * 10;
     document.getElementsByClassName("armorpassive")[0].innerHTML = "<h4>Second Wind</h4>";
-    document.getElementsByClassName("passivecontainer")[0].innerHTML += "<b>Second Wind.</b><p> Once per thread, you may regain " + swindbonus + " HP in a single post, even if you received fatal damage at the time of posting.</p>";
+    document.getElementsByClassName("passivecontainer")[0].innerHTML += "<p><b>Second Wind.</b> <em>(Heavy Armor Passive)</em></p><p>Once per thread, you may regain " + swindbonus + " HP in a single post, even if you received fatal damage at the time of posting.</p><p>Type: Second Wind | Charname in Discord when you use your passive in a thread.</p>";
     if (swind === 0) {
       document.getElementsByClassName("armorskilldisplay")[0].style.display = "none"
     } else {
@@ -1794,7 +1794,7 @@ function namesReplace() {
     document.getElementById("freeactiondisplay").innerHTML = document.getElementById("freeactiondisplay").innerHTML.replace(/Character Name/g, name);
     document.getElementById("actionsdisplay").innerHTML = document.getElementById("actionsdisplay").innerHTML.replace(/Character Name/g, name);
     document.getElementById("saveschecks").innerHTML = document.getElementById("saveschecks").innerHTML.replace(/Character Name/g, name);
-    document.getElementsByClassName("charname")[0].innerHTML = name + "'s ";
+    document.getElementsByClassName("charname")[0].innerHTML = name;
   }
 }
 
