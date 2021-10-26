@@ -44,12 +44,6 @@
   <div id="bodyback">
     <a href="https://terrarp.com/app/"><div class="ts-logo"><img src="https://terrarp.com/db/tool/logo-be-m.webp" alt="TS">
     </div></a>
-<!--
-    <div id="instructiontoggle" onclick="toggleInstructions()">Toggle Instructions</div><br><br>
-    <div id="instructions"><ol><li>Select your masteries and armor weight.<ul><li>You must select at least 3 masteries and no more than 5</li><li>You can only have 1 Alter Mastery at maximum</li><li>Certain masteries have compatability restrictions; check the wiki for more info</li></ul></li><li>Select the ranks for your Equipment and Masteries.</li><li>Select the actions you wish to take.<ul><li>If you have selected light armor, you may choose 5 additional actions.</li><li>Otherwise you may select 4 additional actions.</li></ul></li><li>Your final build will be displayed.<ul><li>Click on the mastery icon in each action card to change the roll code according to the selected mastery.</li><li>Numbers in the STATS section already take your actions and equipment ranks into account.</li><li>A URL with a build code will be displayed at the bottom of the build display page. You can copy/paste it into the address bar to showcase your build.</li></ul></li></ol></div><br>
-    <div id="helpfullinkstoggle" onclick="toggleLinks()">Helpful Links</div><br><br>
-    <div id="helpfullinks"><ol><li><a href="https://terrarp.com/wiki/Mastery" target="_blank" rel="noopener noreferrer">Masteries</a></li><li><a href="https://terrarp.com/wiki/Build_Guide" target="_blank" rel="noopener noreferrer">Build Guide</a></li><li><a href="https://terrarp.com/wiki/Equipment" target="_blank" rel="noopener noreferrer">Equipment</a></li><li><a href="https://terrarp.com/wiki/RPG_Mechanics" target="_blank" rel="noopener noreferrer">RPG Mechanics</a></li></ol></div><br>
--->
 
     <div class="masterycategory" id="inputbox">
       <table>
@@ -160,7 +154,7 @@
     </div>
     <div id="actionselector">
       <div class="charimg"><img id='pfp'></div>
-      <h1 style="text-align:center;font-weight:bold"><span class="characternameheader"></span></h1>
+      <h1 class="nameheader"><span class="characternameheader"></span></h1>
       <h1 class="selectorheader">Free Actions</h1>
       <div class="masterycategory freeactions">
         <div class="card selected">
@@ -194,7 +188,8 @@
     </div>
     <div id="builddisplay">
       <div class="charimg2"><img id="pfp2"></div>
-      <h3 class="selectorheader"><span class='charname'></span>Stats</h3>
+      <h1 class="nameheader"><span class='charname'></span></h1>
+      <h3 class="selectorheader">Stats</h3>
       <div class="masterycategory first" id="statsdisplay">
         <div class="hpcontainer"><div class='hp'><div class='stat-text'>Health</div><img src='https://terrarp.com/db/tool/health.png'></div></div>
         <div class="movementcontainer"><div class='move'><div class='stat-text'>Movement</div><img src='https://terrarp.com/db/tool/movement.png'></div></div>
@@ -254,12 +249,14 @@
           </div>
           </div>
       </div>
-      <h3 class="selectorheader">Mastery</h3>
+      <h3 class="selectorheader">Masteries</h3>
       <div class="masterycategory" id="masterydisplay"></div>
       <h3 class="selectorheader">Equipment</h3>
       <div class="masterycategory" id="equipmentdisplay">
         <div class="edisplay weaponrankdisplay"><div class='displaycircle equipment'><img src='https://terrarp.com/db/tool/weapon-rank.png'></div><div class='displaytitle'>Weapon Rank</div></div>
         <div class="edisplay armorrankdisplay"><div class='displaycircle equipment'><img id="armordisplay"></div><div class='displaytitle'>Armor Rank</div></div>
+      </div>
+      <div class="masterycategory" id="equipmentdisplay">
         <div class="edisplay armorskilldisplay"><div class="passivecontainer"><span class='armorpassive'></span></div></div>
       </div>
       <h3 class="selectorheader">Saves and Checks</h3>
