@@ -1,10 +1,11 @@
 html {
-  background-image: url("https://terrarp.com/db/bg3.webp");
+  /*background-image: url("https://terrarp.com/db/bg3.webp");
   background-repeat: no-repeat;
   background-position: top;
   background-position: center;
   background-attachment: fixed;
-  background-size: cover;
+  background-size: cover;*/
+  background: #222;
   font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
 }
 
@@ -29,11 +30,10 @@ html {
   background-color: #a9357b;
   color: white;
   border-radius: 4px;
-  padding: 3px;
+  padding: 3px 10px;
   user-select: none;
   cursor: pointer;
   text-align: center;
-  font-size: 90%;
 }
 
 #threadcodebutton {
@@ -889,7 +889,7 @@ p {
 }
 .edisplay .displaytitle{
   align-items: center;
-  text-align: center;
+  justify-content: space-around;
   display: flex;
   padding: 5px;
 }
@@ -897,6 +897,7 @@ p {
   padding: 15px 10px;
   align-items: center;
   display: flex;
+  justify-content: space-around;
 }
 
 .aci-rush {
@@ -1173,12 +1174,13 @@ p {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  margin: 5px auto 20px auto;
 }
 
 .togglesavechecks {
     font-size: 1.1em;
     font-weight: bold;
-    background-color: #444;
+    background-color: #c5c5c5;
     color: #fff;
     padding: 5px 15px;
     margin: 2px;
@@ -1231,10 +1233,15 @@ p {
   height: 35px;
   margin: 5px;
 }
-.togglesavechecks:hover, .display.masterycircle:hover {
-  opacity: 0.75;
+.togglesavechecks, .display.masterycircle{
+  transition: all .1s ease-in-out;
 }
-
+.display.masterycircle:hover {
+  transform: scale(1.1);
+}
+.togglesavechecks:hover {
+  background-color: #444;
+}
 .masteryicon {
   display: flex;
   justify-content: center;
@@ -1281,7 +1288,6 @@ p {
   flex-direction: row;
   justify-content: space-between;
   user-select: none;
-  text-align: center;
   flex-wrap: wrap;
 }
 
@@ -1354,6 +1360,7 @@ p {
 #masterycheckicons, #savesicons, #expertiseicons {
   display: flex;
   justify-content: center;
+  margin: 10px auto;
 }
 
 .hpcontainer{
@@ -1387,7 +1394,7 @@ p {
 .stat-text{
   font-weight: 700;
   font-size: 1em;
-  margin-bottom: 10px;
+  margin: 4px auto 10px auto;
   line-height: 100%;
 }
 
@@ -1654,4 +1661,67 @@ td {
 #bodyback{
   padding-top: 100px;
 }
+}
+.tip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+.tiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+}
+.tip:hover .tiptext {
+  visibility: visible;
+}
+.caret{
+  font-size: 0.75em;
+  color: #bbb;
+}
+.ca-left{
+  margin-right: 10px;
+}
+.ca-right{
+  margin-left: 10px;
+}
+.tip{
+  font-size: 0.75em;
+}
+span.ttip {
+  padding: 0px 5px;
+  position: relative;
+  cursor: pointer;
+}
+.ttip-info {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+span.ttip::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: 1.5em;
+  padding: 5px 10px;
+  display: none;
+  color: #eee;
+  background: #222;
+  border-radius: 4px;
+  transition: opacity 0.1s ease-out;
+  z-index: 99;
+  text-align: left;
+  width: 400px;
+  font-size: 14px;
+}
+span.ttip:hover::before {
+  display: inline-block;
+}
+.passivetitle{
+  margin-bottom: 5px;
 }
