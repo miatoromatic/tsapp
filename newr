@@ -1,0 +1,2860 @@
+const Discord = require('discord.js');
+require('dotenv').config();
+const prefix = process.env.PREFIX;
+
+module.exports = {
+    name: 'r',
+    aliases: ['roll'],
+    description: 'Roll dice',
+    execute(message, arguments, args, command) {
+        var msg = message;
+        var mobilefix = message.content.replace(/\u00A0/g, ' ');
+        args = mobilefix.slice(prefix.length).trim().split(' ');
+        command = args.shift().toLowerCase();
+
+        var storycategory = "993010475350622268"
+        var botcategory = "810332475208892436"
+        var testchannel = "354439652515643392"
+        var staffcategory = "986109926843764776"
+        var namecheck = 0;
+        var storycheck = 0;
+
+        var responseperm = 0;
+
+        if (message.channel.parentId === staffcategory || message.channel.parentId === botcategory || message.channelId === testchannel || message.channel.type === 'GUILD_PRIVATE_THREAD' || message.channel.type === 'GUILD_PUBLIC_THREAD') {
+            responseperm = 1
+        }
+
+        if (message.channel.parentId === storycategory) {
+            if (message.channel.name.includes("rolls")) {
+                responseperm = 1
+            } else {
+                responseperm = 0
+            }
+        }
+
+        if (responseperm === 0) {
+            return;
+        } else {
+
+            if (!arguments.length) {
+                message.reply('__ROLL CODES__\n**Basic**\n> Attack | `?r attack MR WR X # Mastery | Name | Code`\n> Recover | `?r recover # Mastery | Name | Code`\n\n**Offense**\n> Heavy Attack | `?r heavy MR WR X # Mastery | Name | Code`\n> Sneak Attack | `?r sneak MR WR X # Mastery | Name | Code`\n>  Attack | `?r reckless MR WR X # Mastery | Name | Code`\n> Burst Attack | `?r burst MR WR X # Mastery | Name | Code`\n> Feral Attack | `?r feral MR WR X # Mastery | Name | Code`\n> Critical Attack | `?r critical MR WR X # Mastery | Name | Code`\n\n**Defense**\n> stable Attack | `?r stable MR WR X # Mastery | Name | Code`\n> Counter | `?r counter MR WR X # Mastery | Name | Code`\n> Protect | `?r protect MR WR X # Mastery | Name | Code`\n> Hinder | `?r hinder MR WR X # Mastery | Name | Code`\n> Ultra Protect | `?r ultraprotect MR WR X # Mastery | Name | Code`\n> Ultra Hinder | `?r ultrahinder MR WR X # Mastery | Name | Code`\n\n**Support**\n> Revive | `?r revive MR # Mastery | Name | Code`\n> Heal | `?r heal MR WR X # Mastery | Name | Code`\n> Buff | `?r buff aoe/single MR WR X # Mastery | Name | Code`\n> Power Heal | `?r powerheal MR WR X # Mastery | Name | Code`\n> Power Buff | `?r powerbuff aoe/single MR WR X # Mastery | Name | Code`\n> Inspire | `?r inspire MR # Mastery | Name | Code`\n> Haste | `?r haste # Mastery | Name | Code`\n\n**Others**\n> Save | `?r save adv/dis X # Type | Name | Code`\n> Expertise Check | `?r expertise adv/dis X # Expertise | Name | Code`\n> Mastery Check | `?r mastery adv/dis MR # Mastery | Name | Code`\n\nREFERENCE\n`MR` = Mastery Rank (E to S). Required\n`WR` = Weapon Rank (E to S). Required\n`X` = All other numerical bonus51525s to the roll. Optional\n`aoe/single` = Required.\n`adv/dis` = Advantage or Disadvantage. Optional.\n`Comment` = Start a comment with `#`. Required').then(setTimeout(() => {
+                    message.delete()
+                }, 1500)).catch(err => console.log(err));;
+            } else {
+                function roll(min, max) {
+                    return Math.floor(Math.random() * (max - min + 1)) + min;
+                }
+
+                //check for comment
+                if (message.content.includes('#')) {
+                    var linebreak = "\n"
+                    var markup = "`"
+                    var c1 = linebreak.concat(markup)
+                    var c2 = c1.concat(message.content.substring(message.content.indexOf('#') + 1).trim());
+                    var comment = c2.concat(markup)
+                } else {
+                    var comment = "";
+                }
+
+                //removes comment
+                argu = args.join(" ");
+                argu = argu.substr(0, argu.indexOf("#"))
+                argu = argu.trim();
+                arguments = argu.split(" ")
+
+                //crits
+                var crits = ""
+
+                //normal roll
+                if ((args[0].toString().includes("d") && args[0].toLowerCase() !== "hinder") && (args[0].toString().includes("d") && args[0].toLowerCase() !== "ultrahinder") && (args[0].toString().includes("d") && args[0].toLowerCase() !== "bashield") && (args[0].toString().includes("d") && args[0].toLowerCase() !== "alterhinder") && (args[0].toString().includes("d") && args[0].toLowerCase() !== "baalterhinder") && (args[0].toString().includes("d") && args[0].toLowerCase() !== "exceed10") && (args[0].toString().includes("d") && args[0].toLowerCase() !== "exceed25") && (args[0].toString().includes("d") && args[0].toLowerCase() !== "exceed50") && (args[0].toString().includes("d") && args[0].toLowerCase() !== "exceed100") && (args[0].toString().includes("d") && args[0].toLowerCase() !== "secondwind") && (args[0].toString().includes("d") && args[0].toLowerCase() !== "disruptive") && (args[0].toString().includes("d") && args[0].toLowerCase() !== "baultradisruptive") && (args[0].toString().includes("d") && args[0].toLowerCase() !== "guardian") && (args[0].toString().includes("d") && args[0].toLowerCase() !== "bacoordinate") && (args[0].toString().includes("d") && args[0].toLowerCase() !== "baoverload") && (args[0].toString().includes("d") && args[0].toLowerCase() !== "basplashdamage") && (args[0].toString().includes("d") && args[0].toLowerCase() !== "baduelist") && (args[0].toString().includes("d") && args[0].toLowerCase() !== "duelist") && (args[0].toString().includes("d") && args[0].toLowerCase() !== "overload") && (args[0].toString().includes("d") && args[0].toLowerCase() !== "shield") && (args[0].toString().includes("d") && args[0].toLowerCase() !== "wild")) {
+                    var dicecode = args[0].split("d")
+                    var numDice = parseInt(dicecode[0])
+                    var dieFace = parseInt(dicecode[1])
+
+                    // Check if there are any modifiers specified
+                    var modifier = 0;
+                    var modifierString = "";
+                    for (var i = 1; i < arguments.length; i++) {
+                        if (!isNaN(arguments[i])) {
+                            modifier += parseInt(arguments[i]);
+                            if (modifierString === "") {
+                                // Hide the plus sign if it is at the beginning of the string
+                                modifierString += arguments[i];
+                            } else {
+                                modifierString += " + " + arguments[i];
+                            }
+                        }
+                    }
+                    //mod format
+                    if (arguments.length > 3) {
+                        for (var i = 3; i < arguments.length; i++) {
+                            mods.push(arguments[i])
+                            modtotal += parseInt(arguments[i])
+                        }
+                    }
+
+                    // Check if the user has specified advantage or disadvantage
+                    var advantage = false;
+                    var disadvantage = false;
+                    for (var i = 1; i < arguments.length; i++) {
+                        if (arguments[i].toLowerCase() === "advantage") {
+                            advantage = true;
+                        } else if (arguments[i].toLowerCase() === "disadvantage") {
+                            disadvantage = true;
+                        }
+                    }
+
+                    if (advantage && disadvantage) {
+                        message.reply("Error: You cannot specify both advantage and disadvantage in the same roll").then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                        return;
+                    }
+
+                    if (advantage || disadvantage) {
+                        // Roll two dice and take the highest (advantage) or lowest (disadvantage) value
+                        var roll1 = roll(1, dieFace);
+                        var roll2 = roll(1, dieFace);
+                        if (advantage) {
+                            var finalRoll = Math.max(roll1, roll2);
+                        } else {
+                            var finalRoll = Math.min(roll1, roll2);
+                        }
+                        var rollString = "";
+                        if (roll1 > roll2) {
+                            rollString = `~~${roll2}~~ ${roll1}`;
+                        } else {
+                            rollString = `${roll1} ~~${roll2}~~`;
+                        }
+
+                        message.reply(`${message.author}\n**Roll Result**\n${numDice}d${dieFace} (${rollString}) ${modifierString} = **${finalRoll + modifier}**${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else {
+                        // Normal roll
+                        var rollresults = []
+                        var total = 0;
+
+                        for (var i = 0; i < numDice; i++) {
+                            var x = roll(1, dieFace)
+                            total += x
+                            rollresults.push(x)
+                        }
+
+                        // Add the modifier to the total
+                        total += modifier;
+
+                        var dicedisplay = rollresults.join(" + ")
+
+                        if (comment.length < 3) {
+                            message.reply(`${message.author} please include a comment in your roll`).then(setTimeout(() => {
+                                message.delete()
+                            }, 1500)).catch(err => console.log(err));
+                            return;
+                        }
+
+                        message.reply(`${message.author}\n**Roll Result**\n${numDice}d${dieFace} (${dicedisplay}) ${modifierString} = **${total}**${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    }
+                } else {
+
+                    //mr and wr
+                    var mr = 0;
+                    var wr = 0;
+                    var countercheck = 0;
+                    var sneakcheck = 0;
+                    var ultracountercheck = 0;
+                    var burstm = 0;
+                    var burstw = 0;
+                    var critrange = 0;
+                    var bonus102030 = 0;
+                    var bonus51015 = 0;
+                    var bonus101520 = 0;
+                    var bonus152025 = 0;
+                    var bonus203040 = 0;
+                    var bonus51525 = 0;
+                    var bonus204060 = 0;
+                    var bonus123 = 0;
+                    var bacomment = "**→** to activate **";
+                    var bacommentend = "**, use:\n";
+                    var mrank = " ";
+                    var wrank = " ";
+
+                    if (args[0].toLowerCase() !== "recover" && args[0].toLowerCase() !== "haste" && args[0].toLowerCase() !== "save" && args[0].toLowerCase() !== "expertise" & args[0].toLowerCase() !== "mastery" && args[0].toLowerCase() !== "heal2" && args[0].toLowerCase() !== "powerheal2" && args[0].toLowerCase() !== "buff2" && args[0].toLowerCase() !== "powerbuff2") {
+
+                        if (arguments[1].toLowerCase() === "e") {
+                            mr = 0
+                            countercheck = 99
+                            ultracountercheck = 99
+                            sneakcheck = 80
+                            burstm = 0
+                            critrange = 100
+                            bonus102030 = 0
+                            bonus152025 = 0
+                            bonus51015 = 0
+                            bonus101520 = 0
+                            bonus203040 = 0
+                            bonus51525 = 0
+                            bonus204060 = 0
+                            bonus123 = 0
+                            mrank = " E "
+                            wrank = "E "
+                        } else if (arguments[1].toLowerCase() === "d") {
+                            mr = 5
+                            countercheck = 70
+                            ultracountercheck = 85
+                            sneakcheck = 70
+                            burstm = 1
+                            critrange = 97
+                            bonus102030 = 10
+                            bonus152025 = 15
+                            bonus51015 = 5
+                            bonus101520 = 10
+                            bonus203040 = 20
+                            bonus51525 = 5
+                            bonus204060 = 20
+                            bonus123 = 1
+                            mrank = " D "
+                            wrank = "D "
+                        } else if (arguments[1].toLowerCase() === "c") {
+                            mr = 10
+                            countercheck = 70
+                            ultracountercheck = 70
+                            sneakcheck = 60
+                            burstm = 2
+                            critrange = 94
+                            bonus102030 = 10
+                            bonus152025 = 15
+                            bonus51015 = 5
+                            bonus101520 = 10
+                            bonus203040 = 20
+                            bonus51525 = 5
+                            bonus204060 = 20
+                            bonus123 = 1
+                            mrank = " C "
+                            wrank = "C "
+                        } else if (arguments[1].toLowerCase() === "b") {
+                            mr = 15
+                            countercheck = 50
+                            ultracountercheck = 55
+                            sneakcheck = 50
+                            burstm = 3
+                            critrange = 91
+                            bonus102030 = 20
+                            bonus152025 = 20
+                            bonus51015 = 10
+                            bonus101520 = 15
+                            bonus203040 = 30
+                            bonus51525 = 15
+                            bonus204060 = 40
+                            bonus123 = 2
+                            mrank = " B "
+                            wrank = "B "
+                        } else if (arguments[1].toLowerCase() === "a") {
+                            mr = 20
+                            countercheck = 40
+                            ultracountercheck = 40
+                            sneakcheck = 40
+                            burstm = 4
+                            critrange = 88
+                            bonus102030 = 20
+                            bonus152025 = 20
+                            bonus51015 = 10
+                            bonus101520 = 15
+                            bonus203040 = 30
+                            bonus51525 = 15
+                            bonus204060 = 40
+                            bonus123 = 2
+                            mrank = " A "
+                            wrank = "A "
+                        } else if (arguments[1].toLowerCase() === "s") {
+                            mr = 25
+                            countercheck = 25
+                            ultracountercheck = 25
+                            sneakcheck = 25
+                            burstm = 5
+                            critrange = 85
+                            bonus102030 = 30
+                            bonus152025 = 25
+                            bonus51015 = 15
+                            bonus101520 = 20
+                            bonus203040 = 40
+                            bonus51525 = 25
+                            bonus204060 = 60
+                            bonus123 = 3
+                            mrank = " S "
+                            wrank = "S "
+                        } else {
+                            message.reply(`${message.author} please use a valid Mastery Rank (E to S)`).then(setTimeout(() => {
+                                message.delete()
+                            }, 1500)).catch(err => console.log(err));
+                            return;
+                        }
+                    }
+
+                    if (args[0].toLowerCase() !== "recover" && args[0].toLowerCase() !== "haste" && args[0].toLowerCase() !== "inspire" && args[0].toLowerCase() !== "revive" && args[0].toLowerCase() !== "save" && args[0].toLowerCase() !== "expertise" & args[0].toLowerCase() !== "mastery" && args[0].toLowerCase() !== "heal2" && args[0].toLowerCase() !== "powerheal2" && args[0].toLowerCase() !== "buff2" && args[0].toLowerCase() !== "powerbuff2" && args[0].toLowerCase() !== "burstatk") {
+
+                        if (arguments[2].toLowerCase() === "e") {
+                            wr = 0
+                            burstw = 0
+                        } else if (arguments[2].toLowerCase() === "d") {
+                            wr = 5
+                            burstw = 1
+                        } else if (arguments[2].toLowerCase() === "c") {
+                            wr = 10
+                            burstw = 2
+                        } else if (arguments[2].toLowerCase() === "b") {
+                            wr = 15
+                            burstw = 3
+                        } else if (arguments[2].toLowerCase() === "a") {
+                            wr = 20
+                            burstw = 4
+                        } else if (arguments[2].toLowerCase() === "s") {
+                            wr = 25
+                            burstw = 5
+                        } else {
+                            message.reply(`${message.author} please use a valid Weapon Rank (E to S)`).then(setTimeout(() => {
+                                message.delete()
+                            }, 1500)).catch(err => console.log(err));
+                            return;
+                        }
+                    }
+
+                    if (args[0].toLowerCase() === "heal2" || args[0].toLowerCase() === "buff2" || args[0].toLowerCase() === "powerheal2" || args[0].toLowerCase() === "powerbuff2") {
+                        if (arguments[2].toLowerCase() === "e") {
+                            mr = 0
+                        } else if (arguments[2].toLowerCase() === "d") {
+                            mr = 5
+                        } else if (arguments[2].toLowerCase() === "c") {
+                            mr = 10
+                        } else if (arguments[2].toLowerCase() === "b") {
+                            mr = 15
+                        } else if (arguments[2].toLowerCase() === "a") {
+                            mr = 20
+                        } else if (arguments[2].toLowerCase() === "s") {
+                            mr = 25
+                        } else {
+                            message.reply(`${message.author} please use a valid Mastery Rank (E to S)`).then(setTimeout(() => {
+                                message.delete()
+                            }, 1500)).catch(err => console.log(err));
+                            return;
+                        }
+                        if (arguments[3].toLowerCase() === "e") {
+                            wr = 0
+                        } else if (arguments[3].toLowerCase() === "d") {
+                            wr = 5
+                        } else if (arguments[3].toLowerCase() === "c") {
+                            wr = 10
+                        } else if (arguments[3].toLowerCase() === "b") {
+                            wr = 15
+                        } else if (arguments[3].toLowerCase() === "a") {
+                            wr = 20
+                        } else if (arguments[3].toLowerCase() === "s") {
+                            wr = 25
+                        } else {
+                            message.reply(`${message.author} please use a valid Weapon Rank (E to S)`).then(setTimeout(() => {
+                                message.delete()
+                            }, 1500)).catch(err => console.log(err));
+                            return;
+                        }
+                    }
+
+                    if (args[0].toLowerCase() === "attack" || args[0].toLowerCase() == "atk") {
+                        //normal attack
+
+                        var total = 0
+                        var roll1 = roll(1, 100)
+                        var mods = [];
+                        var modtotal = 0;
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        var modstring = mods.join(" + ")
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = ""
+                        } else {
+                            var moddisplay = plus.concat(modstring)
+                        }
+
+                        total = roll1 + mr + wr + parseInt(modtotal)
+
+                        if (roll1 === 100) {
+                            total = total * 2
+                            crits = " **(Crit!)**"
+                        } else if (roll1 === 1) {
+                            crits = " **(Critical Failure...)**"
+                        }
+
+                        message.reply(`${message.author}\n**Normal Attack**\n1d100 (${roll1}) + ${mr} + ${wr}${moddisplay} = ${total}${crits}\n**${total} damage**${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "wild") {
+                        //wild attack EX
+
+                        var roll1 = roll(1, 100)
+                        var roll2 = roll(1, 100)
+
+                        var total = 0
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        total = roll1 + roll2 + wr + parseInt(modtotal)
+
+                        var modstring = mods.join(" + ")
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = ""
+                        } else {
+                            var moddisplay = plus.concat(modstring)
+                        }
+
+                        var critCount = 0;
+                        if (roll1 === 100) critCount++;
+                        if (roll2 === 100) critCount++;
+
+                        var failCount = 0;
+                        if (roll1 === 1) failCount++;
+                        if (roll2 === 1) failCount++;
+
+                        if (critCount === 2) {
+                            total = total * 4;
+                            crits = " **(Starbreaker!)**";
+                        } else if (critCount === 1 && failCount === 1) {
+                            total = total * 2;
+                            crits = " **(Quantum Crit!)**";
+                        } else if (critCount === 1) {
+                            total = total * 2;
+                            crits = " **(Crit!)**";
+                        } else if (failCount === 1) {
+                            crits = " **(Critical Failure...)**";
+                        } else if (failCount === 2) {
+                            crits = " **(World Ender...)**";
+                        }
+
+                        message.reply(`${message.author}\n**Wild Attack**\n2d100 (${roll1} + ${roll2}) + ${wr}${moddisplay} = ${total}${crits}\n**${total} damage**${wildcomment}${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "recover") {
+                        //recover
+
+                        var total = 0
+                        var roll1 = roll(1, 20)
+
+                        total += roll1
+
+                        if (roll1 === 20) {
+                            total = total * 2
+                            crits = " **(Crit!)**"
+                        }
+
+                        message.reply(`${message.author}\n**Recover**\n1d20 (${roll1}) = ${total}\nRecover **${total} HP**${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "counterCHECK") {
+                        //counter
+
+                        var total = 0
+                        var roll1 = roll(1, 100)
+                        var mods = [];
+                        var modtotal = 0;
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        if (roll1 >= countercheck) {
+                            var countercomment = "\nCounter successful!\n**+20 damage**. Mitigate **10 damage.**"
+                            mods.push(20)
+                            modtotal += 20
+                        } else {
+                            var countercomment = "\nCounter failed.\n**+10 damage**. No mitigation."
+                        }
+
+                        var modstring = mods.join(" + ")
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = ""
+                        } else {
+                            var moddisplay = plus.concat(modstring)
+                        }
+
+                        total = roll1 + mr + wr + parseInt(modtotal)
+
+                        if (roll1 === 100) {
+                            total = total * 2
+                            crits = " **(Crit!)**"
+                        } else if (roll1 === 1) {
+                            crits = " **(Critical Failure...)**"
+                        }
+
+                        message.reply(`${message.author}\n**Counter**\n1d100 (${roll1}) + ${mr} + ${wr}${moddisplay} = ${total}${crits}\n**${total} damage**${countercomment}${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "ultracounterCHECK") {
+                        //ultra counter
+
+                        var total = 0
+                        var roll1 = roll(1, 100)
+                        var mods = [];
+                        var modtotal = 0;
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        if (roll1 >= ultracountercheck) {
+                            var ultracountercomment = "\nUltra Counter successful!\n**+60 damage** and mitigate **20 damage**."
+                            mods.push(60)
+                            modtotal += 60
+                        } else {
+                            var ultracountercomment = "\nUltra Counter failed.\n**+30 damage** and mitigate **5 damage**. You are Vulnerable."
+                            mods.push(30)
+                            modtotal += 30
+                        }
+
+                        var modstring = mods.join(" + ")
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = ""
+                        } else {
+                            var moddisplay = plus.concat(modstring)
+                        }
+
+                        total = roll1 + mr + wr + parseInt(modtotal)
+
+                        if (roll1 === 100) {
+                            total = total * 2
+                            crits = " **(Crit!)**"
+                        } else if (roll1 === 1) {
+                            crits = " **(Critical Failure...)**"
+                        }
+
+                        message.reply(`${message.author}\n**Ultra Counter**\n1d100 (${roll1}) + ${mr} + ${wr}${moddisplay} = ${total}${crits}\n**${total} damage**${ultracountercomment}${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "save") {
+                        //saves
+
+                        if (args[1].toLowerCase() === "adv") {
+                            var roll1 = roll(1, 100)
+                            var roll2 = roll(1, 100)
+
+                            var total
+                            var mods = [];
+                            var modtotal = 0;
+
+                            if (arguments.length > 2) {
+                                for (var i = 2; i < arguments.length; i++) {
+                                    mods.push(arguments[i])
+                                    modtotal += parseInt(arguments[i])
+                                }
+                            }
+
+                            var modstring = mods.join(" + ")
+                            var plus = " + "
+                            if (!mods.length) {
+                                var moddisplay = ""
+                            } else {
+                                var moddisplay = plus.concat(modstring)
+                            }
+
+                            var rolladv
+                            var rolldisplay
+
+                            if (roll1 >= roll2) {
+                                rolladv = roll1
+                                rolldisplay = `${roll1}, ~~${roll2}~~`
+                            } else {
+                                rolladv = roll2
+                                rolldisplay = `~~${roll1}~~, ${roll2}`
+                            }
+
+                            if (rolladv === 100) {
+                                crits = " **(Critical Success!)**"
+                            } else if (rolladv === 1) {
+                                crits = " **(Critical Failure...)**"
+                            }
+
+                            total = rolladv + parseInt(modtotal)
+
+                            var rolltype = "2d100 (Advantage)"
+                        } else if (args[1].toLowerCase() === "dis") {
+                            var roll1 = roll(1, 100)
+                            var roll2 = roll(1, 100)
+
+                            var total
+                            var mods = [];
+                            var modtotal = 0;
+
+                            if (arguments.length > 2) {
+                                for (var i = 2; i < arguments.length; i++) {
+                                    mods.push(arguments[i])
+                                    modtotal += parseInt(arguments[i])
+                                }
+                            }
+
+                            var modstring = mods.join(" + ")
+                            var plus = " + "
+                            if (!mods.length) {
+                                var moddisplay = ""
+                            } else {
+                                var moddisplay = plus.concat(modstring)
+                            }
+
+                            var rolladv
+                            var rolldisplay
+
+                            if (roll1 >= roll2) {
+                                rolladv = roll2
+                                rolldisplay = `~~${roll1}~~, ${roll2}`
+                            } else {
+                                rolladv = roll1
+                                rolldisplay = `${roll1}, ~~${roll2}~~`
+                            }
+
+                            if (rolladv === 100) {
+                                crits = " **(Critical Success!)**"
+                            } else if (rolladv === 1) {
+                                crits = " **(Critical Failure...)**"
+                            }
+
+                            total = rolladv + parseInt(modtotal)
+
+                            var rolltype = "2d100 (Disadvantage)"
+                        } else {
+                            var roll1 = roll(1, 100)
+
+                            var total
+                            var mods = [];
+                            var modtotal = 0;
+
+                            if (arguments.length > 1) {
+                                for (var i = 1; i < arguments.length; i++) {
+                                    mods.push(arguments[i])
+                                    modtotal += parseInt(arguments[i])
+                                }
+                            }
+
+                            var modstring = mods.join(" + ")
+                            var plus = " + "
+                            if (!mods.length) {
+                                var moddisplay = ""
+                            } else {
+                                var moddisplay = plus.concat(modstring)
+                            }
+
+                            if (roll1 === 100) {
+                                crits = " **(Critical Success!)**"
+                            } else if (roll1 === 1) {
+                                crits = " **(Critical Failure...)**"
+                            }
+
+                            total = roll1 + parseInt(modtotal)
+                            var rolltype = "1d100"
+                            var rolldisplay = `${roll1}`
+                        }
+                        message.reply(`${message.author}\n**Save**\n${rolltype} (${rolldisplay})${moddisplay} = **${total}**${crits}${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "expertise") {
+                        //TO DO expertise checks
+
+                        var multiplier = 1;
+
+                        if (args[1].toLowerCase() === "adv") {
+                            var roll1 = roll(1, 100)
+                            var roll2 = roll(1, 100)
+
+                            var total
+                            var mods = [];
+                            var modtotal = 0;
+
+                            if (arguments.length > 2) {
+                                for (var i = 2; i < arguments.length; i++) {
+                                    mods.push(arguments[i])
+                                    modtotal += parseInt(arguments[i])
+                                }
+                            }
+
+                            var modstring = mods.join(" + ")
+                            var plus = " + "
+                            if (!mods.length) {
+                                var moddisplay = ""
+                            } else {
+                                var moddisplay = plus.concat(modstring)
+                            }
+
+                            var rolladv
+                            var rolldisplay
+
+                            if (roll1 >= roll2) {
+                                rolladv = roll1
+                                rolldisplay = `${roll1}, ~~${roll2}~~`
+                            } else {
+                                rolladv = roll2
+                                rolldisplay = `~~${roll1}~~, ${roll2}`
+                            }
+
+                            if (rolladv === 100) {
+                                crits = " **(Critical Success!)**"
+                                multiplier = 2
+                            } else if (rolladv === 1) {
+                                crits = " **(Critical Failure...)**"
+                            }
+
+                            total = rolladv + parseInt(modtotal)
+                            total = total * multiplier
+
+                            var rolltype = "2d100 (Advantage)"
+                        } else if (args[1].toLowerCase() === "dis") {
+                            var roll1 = roll(1, 100)
+                            var roll2 = roll(1, 100)
+
+                            var total
+                            var mods = [];
+                            var modtotal = 0;
+
+                            if (arguments.length > 2) {
+                                for (var i = 2; i < arguments.length; i++) {
+                                    mods.push(arguments[i])
+                                    modtotal += parseInt(arguments[i])
+                                }
+                            }
+
+                            var modstring = mods.join(" + ")
+                            var plus = " + "
+                            if (!mods.length) {
+                                var moddisplay = ""
+                            } else {
+                                var moddisplay = plus.concat(modstring)
+                            }
+
+                            var rolladv
+                            var rolldisplay
+
+                            if (roll1 >= roll2) {
+                                rolladv = roll2
+                                rolldisplay = `~~${roll1}~~, ${roll2}`
+                            } else {
+                                rolladv = roll1
+                                rolldisplay = `${roll1}, ~~${roll2}~~`
+                            }
+
+                            if (rolladv === 100) {
+                                crits = " **(Critical Success!)**"
+                                multiplier = 2
+                            } else if (rolladv === 1) {
+                                crits = " **(Critical Failure...)**"
+                            }
+
+                            total = rolladv + parseInt(modtotal)
+                            total = total * multiplier
+
+                            var rolltype = "2d100 (Disadvantage)"
+                        } else {
+                            var roll1 = roll(1, 100)
+
+                            var total
+                            var mods = [];
+                            var modtotal = 0;
+
+                            if (arguments.length > 1) {
+                                for (var i = 1; i < arguments.length; i++) {
+                                    mods.push(arguments[i])
+                                    modtotal += parseInt(arguments[i])
+                                }
+                            }
+
+                            var modstring = mods.join(" + ")
+                            var plus = " + "
+                            if (!mods.length) {
+                                var moddisplay = ""
+                            } else {
+                                var moddisplay = plus.concat(modstring)
+                            }
+
+                            if (roll1 === 100) {
+                                crits = " **(Critical Success!)**"
+                                multiplier = 2
+                            } else if (roll1 === 1) {
+                                crits = " **(Critical Failure...)**"
+                            }
+
+                            total = roll1 + parseInt(modtotal)
+                            total = total * multiplier
+                            var rolltype = "1d100"
+                            var rolldisplay = `${roll1}`
+                        }
+                        message.reply(`${message.author}\n**Expertise Check**\n${rolltype} (${rolldisplay})${moddisplay} = **${total}**${crits}${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "mastery") {
+                        //TO DO mastery check
+
+                        var multiplier = 1
+
+                        if (args[1].toLowerCase() === "adv") {
+                            var roll1 = roll(1, 100)
+                            var roll2 = roll(1, 100)
+
+                            var total
+                            var mods = [];
+                            var modtotal = 0;
+
+                            if (arguments[2].toLowerCase() === "e") {
+                                mr = 0;
+                                mods.push(mr);
+                                modtotal += mr
+                            } else if (arguments[2].toLowerCase() === "d") {
+                                mr = 5;
+                                mods.push(mr);
+                                modtotal += mr
+                            } else if (arguments[2].toLowerCase() === "c") {
+                                mr = 10;
+                                mods.push(mr);
+                                modtotal += mr
+                            } else if (arguments[2].toLowerCase() === "b") {
+                                mr = 15;
+                                mods.push(mr);
+                                modtotal += mr
+                            } else if (arguments[2].toLowerCase() === "a") {
+                                mr = 20;
+                                mods.push(mr);
+                                modtotal += mr
+                            } else if (arguments[2].toLowerCase() === "s") {
+                                mr = 25;
+                                mods.push(mr);
+                                modtotal += mr
+                            }
+
+                            if (arguments.length > 3) {
+                                for (var i = 3; i < arguments.length; i++) {
+                                    othermod = parseInt(arguments[i]);
+                                    mods.push(arguments[i]);
+                                    modtotal += othermod
+                                }
+                            }
+
+                            var modstring = mods.join(" + ")
+                            var plus = " + "
+                            if (!mods.length) {
+                                var moddisplay = ""
+                            } else {
+                                var moddisplay = plus.concat(modstring)
+                            }
+
+                            var rolladv
+                            var rolldisplay
+
+                            if (roll1 >= roll2) {
+                                rolladv = roll1
+                                rolldisplay = `${roll1}, ~~${roll2}~~`
+                            } else {
+                                rolladv = roll2
+                                rolldisplay = `~~${roll1}~~, ${roll2}`
+                            }
+
+                            if (rolladv === 100) {
+                                crits = " **(Critical Success!)**"
+                                multiplier = 2
+                            } else if (rolladv === 1) {
+                                crits = " **(Critical Failure...)**"
+                            }
+
+                            total = rolladv + parseInt(modtotal)
+                            total = total * multiplier
+
+                            var rolltype = "2d100 (Advantage)"
+                        } else if (args[1].toLowerCase() === "dis") {
+                            var roll1 = roll(1, 100)
+                            var roll2 = roll(1, 100)
+
+                            var total
+                            var mods = [];
+                            var modtotal = 0;
+
+                            if (arguments[2].toLowerCase() === "e") {
+                                mr = 0;
+                                mods.push(mr);
+                                modtotal += mr
+                            } else if (arguments[2].toLowerCase() === "d") {
+                                mr = 5;
+                                mods.push(mr);
+                                modtotal += mr
+                            } else if (arguments[2].toLowerCase() === "c") {
+                                mr = 10;
+                                mods.push(mr);
+                                modtotal += mr
+                            } else if (arguments[2].toLowerCase() === "b") {
+                                mr = 15;
+                                mods.push(mr);
+                                modtotal += mr
+                            } else if (arguments[2].toLowerCase() === "a") {
+                                mr = 20;
+                                mods.push(mr);
+                                modtotal += mr
+                            } else if (arguments[2].toLowerCase() === "s") {
+                                mr = 25;
+                                mods.push(mr);
+                                modtotal += mr
+                            }
+
+                            if (arguments.length > 3) {
+                                for (var i = 3; i < arguments.length; i++) {
+                                    othermod = parseInt(arguments[i]);
+                                    mods.push(arguments[i]);
+                                    modtotal += othermod
+                                }
+                            }
+
+                            var modstring = mods.join(" + ")
+                            var plus = " + "
+                            if (!mods.length) {
+                                var moddisplay = ""
+                            } else {
+                                var moddisplay = plus.concat(modstring)
+                            }
+
+                            var rolladv
+                            var rolldisplay
+
+                            if (roll1 >= roll2) {
+                                rolladv = roll2
+                                rolldisplay = `~~${roll1}~~, ${roll2}`
+                            } else {
+                                rolladv = roll1
+                                rolldisplay = `${roll1}, ~~${roll2}~~`
+                            }
+
+                            if (rolladv === 100) {
+                                crits = " **(Critical Success!)**"
+                                multiplier = 2
+                            } else if (rolladv === 1) {
+                                crits = " **(Critical Failure...)**"
+                            }
+
+                            total = rolladv + parseInt(modtotal)
+                            total = total * multiplier
+
+                            var rolltype = "2d100 (Disadvantage)"
+                        } else {
+                            var roll1 = roll(1, 100)
+
+                            var total
+                            var mods = [];
+                            var modtotal = 0;
+
+                            if (arguments[1].toLowerCase() === "e") {
+                                mr = 0;
+                                mods.push(mr);
+                                modtotal += mr
+                            } else if (arguments[1].toLowerCase() === "d") {
+                                mr = 5;
+                                mods.push(mr);
+                                modtotal += mr
+                            } else if (arguments[1].toLowerCase() === "c") {
+                                mr = 10;
+                                mods.push(mr);
+                                modtotal += mr
+                            } else if (arguments[1].toLowerCase() === "b") {
+                                mr = 15;
+                                mods.push(mr);
+                                modtotal += mr
+                            } else if (arguments[1].toLowerCase() === "a") {
+                                mr = 20;
+                                mods.push(mr);
+                                modtotal += mr
+                            } else if (arguments[1].toLowerCase() === "s") {
+                                mr = 25;
+                                mods.push(mr);
+                                modtotal += mr
+                            }
+
+                            if (arguments.length > 2) {
+                                for (var i = 2; i < arguments.length; i++) {
+                                    othermod = parseInt(arguments[i]);
+                                    mods.push(arguments[i]);
+                                    modtotal += othermod
+                                }
+                            }
+
+                            var modstring = mods.join(" + ")
+                            var plus = " + "
+                            if (!mods.length) {
+                                var moddisplay = ""
+                            } else {
+                                var moddisplay = plus.concat(modstring)
+                            }
+
+                            if (roll1 === 100) {
+                                crits = " **(Critical Success!)**"
+                                multiplier = 2
+                            } else if (roll1 === 1) {
+                                crits = " **(Critical Failure...)**"
+                            }
+
+                            total = roll1 + parseInt(modtotal)
+                            total = total * multiplier
+                            var rolltype = "1d100"
+                            var rolldisplay = `${roll1}`
+                        }
+                        message.reply(`${message.author}\n**Mastery Check**\n${rolltype} (${rolldisplay})${moddisplay} = **${total}**${crits}${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "hinder") {
+                        //hinder
+
+                        var roll1 = roll(1, 100)
+                        var total = 0
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        mods.push(25)
+                        modtotal += 25
+
+                        total = roll1 + mr + wr + parseInt(modtotal)
+
+                        if (roll1 === 100) {
+                            total = total * 2
+                            crits = " **(Crit!)**"
+                        } else if (roll1 === 1) {
+                            crits = " **(Critical Failure...)**"
+                        }
+
+                        var modstring = mods.join(" + ")
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = ""
+                        } else {
+                            var moddisplay = plus.concat(modstring)
+                        }
+
+                        message.reply(`${message.author}\n**Hinder**\n1d100 (${roll1}) + ${mr} + ${wr}${moddisplay} = ${total}${crits}\n**${total} SP damage**${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "ultrahinder") {
+                        //ultra hinder
+
+                        var roll1 = roll(1, 100)
+                        var roll2 = roll(1, 100)
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        mods.push(50)
+                        modtotal += 50
+
+                        total = roll1 + roll2 + mr + wr + parseInt(modtotal)
+
+                        var critCount = 0;
+                        if (roll1 === 100) critCount++;
+                        if (roll2 === 100) critCount++;
+
+                        var failCount = 0;
+                        if (roll1 === 1) failCount++;
+                        if (roll2 === 1) failCount++;
+
+                        if (critCount === 2) {
+                            total = total * 4;
+                            crits = " **(Starbreaker!)**";
+                        } else if (critCount === 1 && failCount === 1) {
+                            total = total * 2;
+                            crits = " **(Quantum Crit!)**";
+                        } else if (critCount === 1) {
+                            total = total * 2;
+                            crits = " **(Crit!)**";
+                        } else if (failCount === 1) {
+                            total = total / 2;
+                            crits = " **(Critical Failure...)**";
+                        } else if (failCount === 2) {
+                            crits = " **(World Ender...)**";
+                        }
+
+                        var modstring = mods.join(" + ")
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = ""
+                        } else {
+                            var moddisplay = plus.concat(modstring)
+                        }
+
+                        var hindercomment = "\nYou are Vulnerable."
+
+                        message.reply(`${message.author}\n**Ultra Hinder**\n2d100 (${roll1} + ${roll2}) + ${mr} + ${wr}${moddisplay} = ${total}${crits}\n**${total} SP damage**${hindercomment}${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "protect") {
+                        //protect
+
+                        var roll1 = roll(1, 100)
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        total = roll1 + mr + wr + parseInt(modtotal)
+
+                        if (roll1 === 100) {
+                            total = total * 2
+                            crits = " **(Crit!)**"
+                        } else if (roll1 === 1) {
+                            crits = " **(Critical Failure...)**"
+                        }
+
+                        var modstring = mods.join(" + ")
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = ""
+                        } else {
+                            var moddisplay = plus.concat(modstring)
+                        }
+
+                        var protectcomment = "\nGive **1 ally** within range the *Protected State*"
+
+                        message.reply(`${message.author}\n**Protect**\n1d100 (${roll1}) + ${mr} + ${wr}${moddisplay} = ${total}${crits}\n**${total} damage**${protectcomment}${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "ultraprotect") {
+                        //ultra protect
+
+                        var roll1 = roll(1, 100)
+
+                        var total = 0
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        total = roll1 + mr + wr + parseInt(modtotal)
+
+                        var modstring = mods.join(" + ")
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = ""
+                        } else {
+                            var moddisplay = plus.concat(modstring)
+                        }
+
+                        if (roll1 === 100) {
+                            total = total * 2
+                            crits = " **(Crit!)**"
+                        } else if (roll1 === 1) {
+                            crits = " **(Critical Failure...)**"
+                        }
+
+                        var protectcomment = "\nGive **3 allies** within range the *Protected State*. You are Vulnerable."
+
+                        message.reply(`${message.author}\n**Ultra Protect**\n2d100 (${roll1} + ${roll2}) + ${mr} + ${wr}${moddisplay} = ${total}${crits}\n**${total} damage**${protectcomment}${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "sharp") {
+                        // SHARP ATTACK
+
+                        var roll1 = roll(1, 100)
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        wr15 = wr * 1.5
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        total = roll1 + mr + mr + wr + wr15 + parseInt(modtotal)
+
+                        if (roll1 === 100) {
+                            total = total * 2
+                            crits = " **(Crit!)**"
+                        } else if (roll1 === 1) {
+                            crits = " **(Critical Failure...)**"
+                        }
+
+                        var modstring = mods.join(" + ")
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = ""
+                        } else {
+                            var moddisplay = plus.concat(modstring)
+                        }
+
+                        message.reply(`${message.author}\n**Sharp**\n1d100 (${roll1}) + ${mr} + ${mr} + ${wr} + ${wr15}${moddisplay} = ${total}${crits}\n**${total} damage**${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "stable") {
+                        //stable
+
+                        var x = 6
+                        var total = 0
+                        var stabledisplay = []
+                        var stablecount = 0;
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        for (var i = 0; i < x; i++) {
+                            var y = roll(1, 20)
+                            total += y
+                            stabledisplay.push(y)
+                            if (y === 20) {
+                                x += 1
+                                stablecount += 1
+                            }
+                        }
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        total = total + mr + wr + parseInt(modtotal)
+
+                        var modstring = mods.join(" + ")
+                        var stablestring = stabledisplay.join(" + ")
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = ""
+                        } else {
+                            var moddisplay = plus.concat(modstring)
+                        }
+
+                        message.reply(`${message.author}\n**stable Attack**\n6d20 EX (${stablestring}) + ${mr} + ${wr}${moddisplay} = ${total}${crits}\n**${total} damage (Explosions: ${stablecount})**${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "sneak") {
+                        //sneak attack
+
+                        var roll1 = roll(1, 100)
+
+                        var total = 0
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        if (roll1 >= countercheck) {
+                            mods.push(40)
+                            modtotal += 40
+                            var sneakcomment = "\nSneak Attack successful! **+40 damage.**"
+                        } else {
+                            mods.push(20)
+                            modtotal += 20
+                            var sneakcomment = "\nSneak Attack unsuccessful. **+20 damage.**"
+                        }
+
+                        total = roll1 + mr + wr + parseInt(modtotal)
+
+                        var modstring = mods.join(" + ")
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = ""
+                        } else {
+                            var moddisplay = plus.concat(modstring)
+                        }
+
+                        var critCount = 0;
+                        if (roll1 === 100) critCount++;
+
+                        var failCount = 0;
+                        if (roll1 === 1) failCount++;
+
+                        if (critCount === 1) {
+                            total = total * 2;
+                            crits = " **(Crit!)**";
+                        } else if (failCount === 1) {
+                            total = total / 2;
+                            crits = " **(Critical Failure...)**";
+                        }
+
+                        message.reply(`${message.author}\n**Sneak Attack**\n1d100 (${roll1}) + ${mr} + ${wr}${moddisplay} = ${total}${crits}\n**${total} damage**${sneakcomment}${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "nullreckless") {
+                        //reckless attack
+
+                        var roll1 = roll(1, 100)
+                        var roll2 = roll(1, 100)
+                        var roll3 = roll(1, 100)
+                        var roll4 = roll(1, 100)
+
+                        var total = 0
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        total = roll1 + roll2 + roll3 + roll4 + mr + wr + parseInt(modtotal)
+
+                        var modstring = mods.join(" + ")
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = ""
+                        } else {
+                            var moddisplay = plus.concat(modstring)
+                        }
+
+                        var critCount = 0;
+                        if (roll1 === 100) critCount++;
+                        if (roll2 === 100) critCount++;
+                        if (roll3 === 100) critCount++;
+                        if (roll4 === 100) critCount++;
+
+                        var failCount = 0;
+                        if (roll1 === 1) failCount++;
+                        if (roll2 === 1) failCount++;
+                        if (roll3 === 1) failCount++;
+                        if (roll4 === 1) failCount++;
+
+                        if (critCount === 2) {
+                            total = total * 7;
+                            crits = " **(Starbreaker!)**";
+                        } else if (critCount === 1 && failCount === 1) {
+                            total = total * 2;
+                            crits = " **(Quantum Crit!)**";
+                        } else if (critCount === 1) {
+                            total = total * 2;
+                            crits = " **(Crit!)**";
+                        } else if (failCount === 1) {
+                            total = total / 2;
+                            crits = " **(Critical Failure...)**";
+                        } else if (failCount === 2) {
+                            crits = " **(World Ender...)**";
+                        }
+
+                        var recklesscomment = "\nYou are Vulnerable."
+
+                        message.reply(`${message.author}\n**Reckless Attack**\n4d100 (${roll1} + ${roll2} + ${roll3} + ${roll4}) + ${mr} + ${wr}${moddisplay} = ${total}${crits}\n**${total} damage**${recklesscomment}${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "nullrecklessex") {
+                        //reckless attack EX
+
+                        var roll1 = roll(1, 100)
+                        var roll2 = roll(1, 100)
+                        var roll3 = roll(1, 100)
+                        var roll4 = roll(1, 100)
+
+                        var total = 0
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        total = roll1 + roll2 + roll3 + roll4 + wr + parseInt(modtotal)
+
+                        var modstring = mods.join(" + ")
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = ""
+                        } else {
+                            var moddisplay = plus.concat(modstring)
+                        }
+
+                        var critCount = 0;
+                        if (roll1 === 100) critCount++;
+                        if (roll2 === 100) critCount++;
+                        if (roll3 === 100) critCount++;
+                        if (roll4 === 100) critCount++;
+
+                        var failCount = 0;
+                        if (roll1 === 1) failCount++;
+                        if (roll2 === 1) failCount++;
+                        if (roll3 === 1) failCount++;
+                        if (roll4 === 1) failCount++;
+
+                        if (critCount === 2) {
+                            total = total * 7;
+                            crits = " **(Starbreaker!)**";
+                        } else if (critCount === 1 && failCount === 1) {
+                            total = total * 2;
+                            crits = " **(Quantum Crit!)**";
+                        } else if (critCount === 1) {
+                            total = total * 2;
+                            crits = " **(Crit!)**";
+                        } else if (failCount === 1) {
+                            total = total / 2;
+                            crits = " **(Critical Failure...)**";
+                        } else if (failCount === 2) {
+                            crits = " **(World Ender...)**";
+                        }
+
+                        var recklesscomment = "\nYou are Vulnerable."
+
+                        message.reply(`${message.author}\n**Reckless Attack**\n4d100 (${roll1} + ${roll2} + ${roll3} + ${roll4}) + ${wr}${moddisplay} = ${total}${crits}\n**${total} damage**${recklesscomment}${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "reckless") {
+
+                      var x = 1 + bonus123
+                      var z = 1 + bonus123
+                      var total = 0
+                      var burstdisplay = []
+                      var burstcount = 0;
+
+                      var mods = [];
+                      var modtotal = 0;
+
+                      for (var i = 0; i < x; i++) {
+                          var y = roll(1, 100)
+                          total += y
+                          burstdisplay.push(y)
+                      }
+
+                      if (x === 100) {
+                        total = total * 2;
+                        crits = " **(Crit!)**";
+                      } else if (x === 1) {
+                        crits = " **(Critical Failure...)**";
+                      } else if (x === 100, 100) {
+                        total = total * 7;
+                        crits = " **(Starbreaker!)**";
+                      } else if (x === 1, 1) {
+                        crits = " **(World Ender...)**";
+                      } else if (x === 1, 100) {
+                        total = total * 2;
+                        crits = " **(Quantum Crit!)**";
+                      }
+
+                      if (arguments.length > 3) {
+                          for (var i = 3; i < arguments.length; i++) {
+                              mods.push(arguments[i])
+                              modtotal += parseInt(arguments[i])
+                          }
+                      }
+
+                      total = total + mr + wr + parseInt(modtotal)
+
+                      var burstcomment = `\nYou are Vulnerable.`
+
+                      var modstring = mods.join(" + ")
+                      var burststring = burstdisplay.join(" + ")
+                      var plus = " + "
+                      if (!mods.length) {
+                          var moddisplay = ""
+                      } else {
+                          var moddisplay = plus.concat(modstring)
+                      }
+
+                      message.reply(`${message.author}\n**Reckless Attack**\n${z}d100 (${burststring})${moddisplay} = ${total}${crits}\n**${total} damage (${burstcount} explosions)**${burstcomment}${comment}`).then(setTimeout(() => {
+                          message.delete()
+                      }, 1500)).catch(err => console.log(err));
+
+
+                    } else if (args[0].toLowerCase() === "nullmulti") {
+                        //multi attack
+
+                        var roll1 = roll(1, 100)
+                        var roll2 = roll(1, 100)
+
+                        var total = 0
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        total = roll1 + roll2 + mr + mr + wr + wr + parseInt(modtotal) + parseInt(modtotal)
+
+                        var modstring = mods.join(" + ")
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = ""
+                        } else {
+                            var moddisplay = plus.concat(modstring)
+                        }
+
+                        var critCount = 0;
+                        if (roll1 === 100) critCount++;
+                        if (roll2 === 100) critCount++;
+
+                        var failCount = 0;
+                        if (roll1 === 1) failCount++;
+                        if (roll2 === 1) failCount++;
+
+                        if (critCount === 2) {
+                            total = total * 4;
+                            crits = " **(Starbreaker!)**";
+                        } else if (critCount === 1 && failCount === 1) {
+                            total = total * 2;
+                            crits = " **(Quantum Crit!)**";
+                        } else if (critCount === 1) {
+                            total = total * 2;
+                            crits = " **(Crit!)**";
+                        } else if (failCount === 1) {
+                            total = total / 2;
+                            crits = " **(Critical Failure...)**";
+                        } else if (failCount === 2) {
+                            crits = " **(World Ender...)**";
+                        }
+
+                        var multicomment = "\nYou are Vulnerable."
+
+                        message.reply(`${message.author}\n**Multi Attack**\n1d100 (${roll1}) + ${mr} + ${wr}${moddisplay} + 1d100 (${roll2}) + ${mr} + ${wr}${moddisplay} = ${total}${crits}\n**${total} damage**${multicomment}${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "multiex") {
+                        //multi attack EX
+
+                        var roll1 = roll(1, 100)
+                        var roll2 = roll(1, 100)
+
+                        var total = 0
+                        var submodtotal = parseInt(modtotal) * 0.5
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        total = roll1 + mr + mr + parseInt(modtotal) + roll2 + ((wr + wr + parseInt(modtotal)) * 0.5)
+                        total = Math.ceil(total)
+
+                        var modstring = mods.join(" + ")
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = "";
+                        } else {
+                            var moddisplay = plus.concat(modstring);
+                        }
+
+                        var critCount = 0;
+                        if (roll1 === 100) critCount++;
+                        if (roll2 === 100) critCount++;
+
+                        var failCount = 0;
+                        if (roll1 === 1) failCount++;
+                        if (roll2 === 1) failCount++;
+
+                        if (critCount === 2) {
+                            total = total * 4;
+                            crits = " **(Starbreaker!)**";
+                        } else if (critCount === 1 && failCount === 1) {
+                            total = total * 2;
+                            crits = " **(Quantum Crit!)**";
+                        } else if (critCount === 1) {
+                            total = total * 2;
+                            crits = " **(Crit!)**";
+                        } else if (failCount === 1) {
+                            total = total / 2;
+                            crits = " **(Critical Failure...)**";
+                        } else if (failCount === 2) {
+                            crits = " **(World Ender...)**";
+                        }
+
+                        var multicomment = "\nYou are Vulnerable."
+
+                        message.reply(`${message.author}\n**Multi Attack EX**\n1d100 (${roll1}) + ${mr} + ${wr}${moddisplay} + [ ( 1d100 (${roll2}) + ${mr} + ${wr}${moddisplay} ) * 0.5 ] = ${total}${crits}\n**${total} damage**${multicomment}${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "multi") {
+                        //multi attack EX
+
+                        var roll1 = roll(1, 100)
+                        var roll2 = roll(1, 100)
+
+                        var total = 0
+                        var submodtotal = parseInt(modtotal) * 0.5
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        total = roll1 + mr + wr + parseInt(modtotal) + roll2 + mr + wr + ((parseInt(modtotal)) * 0.5)
+                        total = Math.ceil(total)
+
+                        var modstring = mods.join(" + ")
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = "";
+                        } else {
+                            var moddisplay = plus.concat(modstring);
+                        }
+
+                        var critCount = 0;
+                        if (roll1 === 100) critCount++;
+                        if (roll2 === 100) critCount++;
+
+                        var failCount = 0;
+                        if (roll1 === 1) failCount++;
+                        if (roll2 === 1) failCount++;
+
+                        if (critCount === 2) {
+                            total = total * 4;
+                            crits = " **(Starbreaker!)**";
+                        } else if (critCount === 1 && failCount === 1) {
+                            total = total * 2;
+                            crits = " **(Quantum Crit!)**";
+                        } else if (critCount === 1) {
+                            total = total * 2;
+                            crits = " **(Crit!)**";
+                        } else if (failCount === 1) {
+                            crits = " **(Critical Failure...)**";
+                        } else if (failCount === 2) {
+                            crits = " **(World Ender...)**";
+                        }
+
+                        var multicomment = "\nYou are Vulnerable."
+
+                        message.reply(`${message.author}\n**Multi Attack 2**\n1d100 (${roll1}) + ${mr} + ${wr}${moddisplay} and\n1d100 (${roll2}) + ${mr} + ${wr} [ (${moddisplay} ) * 0.5 ]\n**${total} damage**${crits}${multicomment}${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "critical") {
+                        //critical attack
+
+                        var roll1 = roll(1, 100)
+                        var roll2 = roll(1, 100)
+
+                        var total = 0
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        var rollfirst
+                        var rolladv
+                        var rollsecond
+
+                        if (roll1 >= roll2) {
+                            rolladv = roll1
+                            rollfirst = roll1
+                            rollsecond = "~~" + roll2.toString() + "~~"
+                        } else {
+                            rolladv = roll2
+                            rollfirst = "~~" + roll1.toString() + "~~"
+                            rollsecond = roll2
+                        }
+
+                        total = rolladv + mr + wr + 40 + parseInt(modtotal)
+
+                        var modstring = mods.join(" + ")
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = ""
+                        } else {
+                            var moddisplay = plus.concat(modstring)
+                        }
+
+                        if (rolladv >= critrange) {
+                            total = total * 3
+                            crits = " **(Crit!)**"
+                        } else if (roll1 === 1 || roll2 === 1) {
+                            crits = " **(Critical Failure...)**"
+                        }
+
+                        var critcomment = "\nYou are Vulnerable."
+
+                        message.reply(`${message.author}\n**Critical Attack**\n2d100 (Advantage) (${rollfirst}, ${rollsecond}) + ${mr} + ${wr} + 40${moddisplay} = ${total}${crits}\n**${total} damage**${critcomment}${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "NULLcritical2") {
+                        //critical attack ADV
+
+                        var roll1 = roll(1, 100)
+                        var roll2 = roll(1, 100)
+                        var roll3 = roll(1, 100)
+                        var rolls = [roll1, roll2, roll3];
+                        rolls.sort(function(a, b) {
+                            return b - a
+                        }); // sort rolls in descending order
+                        var highestRoll = rolls[0]; // keep the highest roll
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        total = highestRoll + mr + mr + wr + parseInt(modtotal)
+
+                        var modstring = mods.join(" + ")
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = ""
+                        } else {
+                            var moddisplay = plus.concat(modstring)
+                        }
+
+                        if (highestRoll >= critrange) {
+                            total = total * 3;
+                            crits = " **(Crit!)**";
+                        } else if (highestRoll === 1) {
+                            crits = " **(Critical Failure...)**";
+                        }
+
+                        var critcomment = "\nYou are Vulnerable.";
+
+                        // Display the rolls and strike out the two lowest rolls
+                        var rollString;
+                        if (roll1 > roll2 && roll1 > roll3) {
+                            rollString = `3d100kh1 (${roll1}, ~~${roll2}~~, ~~${roll3}~~)`;
+                        } else if (roll2 > roll1 && roll2 > roll3) {
+                            rollString = `3d100kh1 (~~${roll1}~~, ${roll2}, ~~${roll3}~~)`;
+                        } else {
+                            rollString = `3d100kh1 (~~${roll1}~~, ~~${roll2}~~, ${roll3})`;
+                        }
+
+                        if (roll1 == roll2 || roll1 == roll3) {
+                            rollString = `3d100kh1 (${roll1}, ~~${roll2}~~, ~~${roll3}~~)`;
+                        } else if (roll2 == roll1 || roll2 == roll3) {
+                            rollString = `3d100kh1 (~~${roll1}~~, ~~${roll2}~~, ~~${roll3}~~)`;
+                        }
+
+                        message.reply(`${message.author}\n**Extra Critical**\n${rollString} + ${mr} + ${mr} + ${wr}${moddisplay} = ${total}${crits}\n**${total} damage**${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "critical2") {
+                        //critical attack
+
+                        var roll1 = roll(1, 100)
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        total = roll1 + mr + mr + wr + parseInt(modtotal)
+
+                        var modstring = mods.join(" + ")
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = ""
+                        } else {
+                            var moddisplay = plus.concat(modstring)
+                        }
+
+                        if (roll1 >= critrange) {
+                            total = total * 3;
+                            crits = " **(Crit!)**";
+                        } else if (roll1 === 1) {
+                            crits = " **(Critical Failure...)**";
+                        }
+
+                        var critcomment = "\nYou are Vulnerable.";
+
+                        message.reply(`${message.author}\n**Extra Critical**\n1d100 (${roll1}) + ${mr} + ${wr} + 40${moddisplay} = ${total}${crits}\n**${total} damage**${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "NULLburst") {
+                        //burst attack
+
+                        var x = 10 + burstm + burstw
+                        var z = 10 + burstm + burstw
+                        var total = 0
+                        var burstdisplay = []
+                        var burstcount = 0;
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        for (var i = 0; i < x; i++) {
+                            var y = roll(1, 20)
+                            total += y
+                            burstdisplay.push(y)
+                            if (y === 20) {
+                                x += 1
+                                burstcount = x - z;
+                            }
+                            if (x === 50) {
+                                break;
+                            }
+                        }
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        total = total + parseInt(modtotal)
+
+                        var burstcomment = `\nYou are Vulnerable.`
+
+                        var modstring = mods.join(" + ")
+                        var burststring = burstdisplay.join(" + ")
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = ""
+                        } else {
+                            var moddisplay = plus.concat(modstring)
+                        }
+
+                        message.reply(`${message.author}\n**Burst Attack**\n${z}d20 (${burststring})${moddisplay} = ${total}${crits}\n**${total} damage (${burstcount} explosions)**${burstcomment}${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "burst") {
+                        //burst attack
+
+                        var x = 10 + burstm + burstw
+                        var z = 10 + burstm + burstw
+                        var total = 0
+                        var burstdisplay = []
+                        var burstcount = 0;
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        for (var i = 0; i < x; i++) {
+                            var y = roll(1, 20)
+                            total += y
+                            burstdisplay.push(y)
+                            if (y >= 19) {
+                                x += 1
+                                burstcount = x - z;
+                            }
+                            if (x === 50) {
+                                break;
+                            }
+                        }
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        total = total + parseInt(modtotal)
+
+                        var burstcomment = `\nYou are Vulnerable.`
+
+                        var modstring = mods.join(" + ")
+                        var burststring = burstdisplay.map(number => number >= 19 ? "**__" + number + "__**" : number).join(" + ");
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = ""
+                        } else {
+                            var moddisplay = plus.concat(modstring)
+                        }
+
+                        message.reply(`${message.author}\n**Burst Attack**\n${z}d20 (${burststring})${moddisplay} = ${total}${crits}\n**${total} damage (${burstcount} explosions)**${burstcomment}${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "inspire") {
+                        //inspire
+
+                        var x = burstm + 1
+
+                        var total = 0
+                        var inspiredisplay = []
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        for (var i = 0; i < x; i++) {
+                            var y = roll(1, 6)
+                            total += y
+                            inspiredisplay.push(y)
+                        }
+
+                        if (arguments.length > 2) {
+                            for (var i = 2; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        total = total + parseInt(modtotal)
+
+                        var modstring = mods.join(" + ")
+                        var inspirestring = inspiredisplay.join(" + ")
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = ""
+                        } else {
+                            var moddisplay = plus.concat(modstring)
+                        }
+
+                        message.reply(`${message.author}\n**Inspire**\n${x}d6 (${inspirestring})${moddisplay} = ${total}${crits}\n**+${total} to 3 targets' checks, saves, buffs, heals, or attacks.**${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "haste") {
+                        //haste
+
+                        var roll1 = roll(1, 6)
+
+                        var total = 0
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        if (arguments.length > 2) {
+                            for (var i = 2; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        total = roll1 + parseInt(modtotal)
+
+                        var modstring = mods.join(" + ")
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = ""
+                        } else {
+                            var moddisplay = plus.concat(modstring)
+                        }
+
+                        message.reply(`${message.author}\n**Haste**\n1d6 (${roll1})${moddisplay} = ${total}${crits}\n**+${total} movement split in any way up to 3 allies**${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "revive") {
+                        var x = burstm + 1
+                        var rezcount = 1
+
+                        var rezdisplay = []
+
+                        for (var i = 0; i < x; i++) {
+                            var y = roll(1, 20)
+                            rezdisplay.push(y)
+                            if (y === 20) {
+                                rezcount += 1
+                            }
+                        }
+
+                        var moddisplay = ""
+
+                        var rezstring = rezdisplay.join(", ")
+
+                        message.reply(`${message.author}\n**Revive**\n${x}d20 (${rezstring})${moddisplay}\n**Revive ${rezcount} target(s)**${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "heal") {
+                        //HEAL
+
+                        x = 2;
+                        total = 0;
+                        stabledisplay = [];
+                        stablecount = 0;
+
+                        mods = [];
+                        modtotal = 0;
+
+                        for (var i = 0; i < x; i++) {
+                            y = roll(1, 20);
+                            total += y;
+                            stabledisplay.push(y);
+                            if (y === 20) {
+                                x += 1;
+                                stablecount += 1;
+                            }
+                        }
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i]);
+                                modtotal += parseInt(arguments[i]);
+                            }
+                        }
+
+                        total = total + mr + wr + parseInt(modtotal);
+
+                        modstring = mods.join(" + ");
+                        stablestring = stabledisplay.join(" + ");
+                        plus = " + ";
+                        if (!mods.length) {
+                            moddisplay = "";
+                        } else {
+                            moddisplay = plus.concat(modstring);
+                        }
+
+                        // Divide total by 3 and round up the result
+                        const dividedTotal = Math.ceil(total / 3);
+
+                        // Check for the presence of "aoe" in the command
+                        const aoePresent = args.some(arg => arg.toLowerCase() === "aoe");
+                        let aoeMessage = "";
+                        if (aoePresent) {
+                            aoeMessage = total + " / 3" + " (" + stablecount + " explosions)" + "\n**+" + dividedTotal + " HP to 3 targets**";
+                            typeMessage = "AoE ";
+                        }
+
+                        let totalMessage = `${total}${crits}`;
+                        if (aoePresent) {
+                            totalMessage = "";
+                        } else {
+                            totalMessage = total + " (" + stablecount + " explosions)" + "\n**+" + total + " HP to 1 target**";
+                            typeMessage = "";
+                        }
+
+                        message.reply(`${message.author}\n**${typeMessage}Heal**\n2d20 (${stablestring}) + ${mr} + ${wr}${moddisplay} = ${totalMessage}${aoeMessage}${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "buff") {
+                        // BUFF ACTION
+
+                        var roll1 = roll(1, 100)
+
+                        var total = 0
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        total = roll1 + mr + wr + 25 + parseInt(modtotal)
+
+                        var modstring = mods.join(" + ")
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = ""
+                        } else {
+                            var moddisplay = plus.concat(modstring)
+                        }
+
+                        var critCount = 0;
+                        if (roll1 === 100) critCount++;
+
+                        var failCount = 0;
+                        if (roll1 === 1) failCount++;
+
+                        if (critCount === 1) {
+                            total = total * 2;
+                            crits = " **(Crit!)**";
+                        } else if (failCount === 1) {
+                            total = total / 2;
+                            crits = " **(Critical Failure...)**";
+                        }
+
+                        // Divide total by 3 and round up the result
+                        const dividedTotal = Math.ceil(total / 3);
+
+                        // Check for the presence of "aoe" in the command
+                        const aoePresent = args.some(arg => arg.toLowerCase() === "aoe");
+                        let aoeMessage = "";
+                        if (aoePresent) {
+                            aoeMessage = total + " / 3" + "\n**+" + dividedTotal + " extra damage to 3 targets for 1 attack**";
+                            typeMessage = "AoE ";
+                        }
+
+                        let totalMessage = `${total}${crits}`;
+                        if (aoePresent) {
+                            totalMessage = "";
+                        } else {
+                            totalMessage = total + " / 3" + "\n**+" + dividedTotal + " extra damage to 1 target for 3 attacks**";
+                            typeMessage = "";
+                        }
+
+                        message.reply(`${message.author}\n**${typeMessage}Buff**\n1d100 (${roll1}) + [25] + ${mr} + ${wr}${moddisplay} = ${totalMessage}${aoeMessage}${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "powerheal") {
+                        //POWER HEAL
+
+                        x = 4;
+                        total = 0;
+                        stabledisplay = [];
+                        stablecount = 0;
+
+                        mods = [];
+                        modtotal = 0;
+
+                        for (var i = 0; i < x; i++) {
+                            y = roll(1, 20);
+                            total += y;
+                            stabledisplay.push(y);
+                            if (y === 20) {
+                                x += 1;
+                                stablecount += 1;
+                            }
+                        }
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i]);
+                                modtotal += parseInt(arguments[i]);
+                            }
+                        }
+
+                        total = total + mr + wr + parseInt(modtotal);
+
+                        modstring = mods.join(" + ");
+                        stablestring = stabledisplay.join(" + ");
+                        plus = " + ";
+                        if (!mods.length) {
+                            moddisplay = "";
+                        } else {
+                            moddisplay = plus.concat(modstring);
+                        }
+
+                        // Divide total by 3 and round up the result
+                        const dividedTotal = Math.ceil(total / 3);
+
+                        // Check for the presence of "aoe" in the command
+                        const aoePresent = args.some(arg => arg.toLowerCase() === "aoe");
+                        let aoeMessage = "";
+                        if (aoePresent) {
+                            aoeMessage = total + " / 3" + " (" + stablecount + " explosions)" + "\n**+" + dividedTotal + " HP to 3 targets**";
+                            typeMessage = "AoE ";
+                        }
+
+                        let totalMessage = `${total}${crits}`;
+                        if (aoePresent) {
+                            totalMessage = "";
+                        } else {
+                            totalMessage = total + " (" + stablecount + " explosions)" + "\n**+" + total + " HP to 1 target**";
+                            typeMessage = "";
+                        }
+
+                        var vuln = "\nYou are Vulnerable."
+
+                        message.reply(`${message.author}\n**${typeMessage}Power Heal**\n2d20 (${stablestring}) + ${mr} + ${wr}${moddisplay} = ${totalMessage}${aoeMessage}${vuln}${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+                    } else if (args[0].toLowerCase() === "powerbuff") {
+                        //TO DO power buff
+
+                        var roll1 = roll(1, 100)
+                        var roll2 = roll(1, 100)
+
+                        var total = 0
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        total = roll1 + roll2 + mr + wr + 50 + parseInt(modtotal)
+
+                        var modstring = mods.join(" + ")
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = ""
+                        } else {
+                            var moddisplay = plus.concat(modstring)
+                        }
+
+                        var critCount = 0;
+                        if (roll1 === 100) critCount++;
+                        if (roll2 === 100) critCount++;
+
+                        var failCount = 0;
+                        if (roll1 === 1) failCount++;
+                        if (roll2 === 1) failCount++;
+
+                        if (critCount === 2) {
+                            total = total * 7;
+                            crits = " **(Starbreaker!)**";
+                        } else if (critCount === 1 && failCount === 1) {
+                            total = total * 2;
+                            crits = " **(Quantum Crit!)**";
+                        } else if (critCount === 1) {
+                            total = total * 2;
+                            crits = " **(Crit!)**";
+                        } else if (failCount === 1) {
+                            total = total / 2;
+                            crits = " **(Critical Failure...)**";
+                        } else if (failCount === 2) {
+                            crits = " **(World Ender...)**";
+                        }
+
+                        var recklesscomment = "\nYou are Vulnerable."
+
+                        // Divide total by 3 and round up the result
+                        const dividedTotal = Math.ceil(total / 3);
+
+                        // Check for the presence of "aoe" in the command
+                        const aoePresent = args.some(arg => arg.toLowerCase() === "aoe");
+                        let aoeMessage = "";
+                        if (aoePresent) {
+                            aoeMessage = total + " / 3" + "\n**+" + dividedTotal + " extra damage to 3 targets for 1 **";
+                            typeMessage = "AoE ";
+                        }
+
+                        let totalMessage = `${total}${crits}`;
+                        if (aoePresent) {
+                            totalMessage = "";
+                        } else {
+                            totalMessage = total + " / 3" + "\n**+" + dividedTotal + " extra damage to 1 target for 3 attacks**";
+                            typeMessage = "";
+                        }
+
+                        message.reply(`${message.author}\n**${typeMessage}Power Buff**\n2d100 (${roll1} + ${roll2}) + [50] + ${mr} + ${wr}${moddisplay} = ${totalMessage}${aoeMessage}${recklesscomment}${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "alterhinder") {
+                        //ALTER HINDER
+
+                        var total = 0
+
+                        baalterhindercomment = "``?r baalterhinder" + mrank + wrank + "# Name``"
+
+                        message.reply(`${message.author}\n**(F) Alter Hinder**\n*You may distribute HP and SP damage however you'd like when you use Hinder and Ultra Hinder.*${comment}`)
+                            .then(setTimeout(() => {
+                                message.delete()
+                            }, 1500))
+                            .then(() => message.reply(`${message.author}\n${bacomment}(BA) Alter Hinder${bacommentend}${baalterhindercomment}`))
+                            .catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "baalterhinder") {
+                        //ALTER HINDER
+
+                        var total = 0
+
+                        message.reply(`${message.author}\n**(BA) Alter Hinder**\nDeal an extra **${bonus101520} SP damage** when you attack.${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "taunt") {
+                        //F TAUNT
+
+                        var total = 0
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        total = parseInt(modtotal) * 3
+
+                        tauntcomment = "``?r bataunt" + mrank + wrank + " DAMAGE # Name``"
+
+                        message.reply(`${message.author}\n**(F) Taunt**\n(${modtotal} * 3) = **${total} threat**${comment}`)
+                            .then(setTimeout(() => {
+                                message.delete()
+                            }, 1500))
+                            .then(() => message.reply(`${message.author}\n${bacomment}(BA) Taunt${bacommentend}${tauntcomment}`))
+                            .catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "bataunt") {
+                        //BA TAUNT
+
+                        var total = 0
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        total = parseInt(modtotal) * 5
+
+                        message.reply(`${message.author}\n**(BA) Taunt**\n(${modtotal} * 5) = **${total} threat**${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "torment") {
+                        //F TORMENT
+
+                        ultratormentcomment = "``?r ultratorment" + mrank + wrank + "# Name``"
+                        areatormentcomment = "``?r areatorment" + mrank + wrank + "# Name``"
+
+                        message.reply(`${message.author}\n**(F) Torment**\nDeal **${bonus101520} flat damage** to an adjacent enemy.${comment}`)
+                            .then(setTimeout(() => {
+                                message.delete()
+                            }, 1500))
+                            .then(() => message.reply(`${message.author}\n${bacomment}(BA) Ultra Torment${bacommentend}${ultratormentcomment}\n${bacomment}(BA) Area Torment${bacommentend}${areatormentcomment}`))
+                            .catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "ultratorment") {
+                        //BA ULTRA TORMENT
+
+                        total = bonus101520 * 2
+
+                        message.reply(`${message.author}\n**(BA) Ultra Torment**\nTorment damage doubled.\nDeal **${total} flat damage** to an enemy adjacent to you.${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "areatorment") {
+                        //BA AREA TORMENT
+
+                        message.reply(`${message.author}\n**(BA) Area Torment**\nDeal **${bonus101520} flat damage** to *all* enemies adjacent to you or those narratively close*.${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "bashield" || args[0].toLowerCase() === "shield") {
+                        //BA SHIELD
+
+                        message.reply(`${message.author}\n**(BA) Shield**\nMitigate **${bonus51015} incoming damage** to yourself or a [Defense] action target.${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "baoverload" || args[0].toLowerCase() === "overload") {
+                        //BA Overload
+
+                        message.reply(`${message.author}\n**(BA) Overload**\nAttacks & buffs gain **${bonus203040}** and heals gain **${bonus101520}.**\nYou cannot move this cycle.${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "areaeffect") {
+                          //SHARPSHOOTER
+
+                          sdcomment = "``?r basplashdamage" + mrank + wrank + "# Name``"
+
+                          message.reply(`${message.author}\n**(F) Area Effect **\nDivide your damage between the target and all enemies adjacent to them. Take retaliation damage (if any) from each enemy you damage.${comment}`)
+                              .then(setTimeout(() => {
+                                  message.delete()
+                              }, 1500))
+                              .then(() => message.reply(`${message.author}\n${bacomment}(BA) Splash Damage${bacommentend}${sdcomment}\n*Damage all enemies adjacent to the target. No retaliation.*`))
+                              .catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "basplashdamage") {
+                        //AOE
+
+                        var x = 0 + bonus123
+                        var z = 0 + bonus123
+                        var total = 0
+                        var burstdisplay = []
+                        var burstcount = 0;
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        for (var i = 0; i < x; i++) {
+                            var y = roll(1, 20)
+                            total += y
+                            burstdisplay.push(y)
+                            if (y === 20) {
+                                x += 1
+                                burstcount = x - z;
+                            }
+                            if (x === 50) {
+                                break;
+                            }
+                        }
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        var modstring = mods.join(" + ")
+                        var burststring = burstdisplay.join(" + ")
+                        var plus = " + "
+                        if (!mods.length) {
+                            var moddisplay = ""
+                        } else {
+                            var moddisplay = plus.concat(modstring)
+                        }
+
+                        message.reply(`${message.author}\n**(BA) Splash Damage**\n${z}d20 (${burststring}) = **${total} splash damage**${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "baduelist" || args[0].toLowerCase() === "duelist") {
+                        //BA DUELIST
+
+                        message.reply(`${message.author}\n**(BA) Duelist**\n**+${bonus51015} bonus damage** when you attack an enemy in melee.${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "sharpshooter") {
+                        //SHARPSHOOTER
+
+                        sscomment = "``?r baaim" + mrank + wrank + "# Name``"
+
+                            message.reply(`${message.author}\n**(F) Sharpshooter**\n**+5 bonus damage** when you attack enemy at range (+10 if you have Hyper Awareness).${comment}`)
+                                .then(setTimeout(() => {
+                                    message.delete()
+                                }, 1500))
+                                .then(() => message.reply(`${message.author}\n${bacomment}(BA) Aim${bacommentend}${sscomment}`))
+                                .catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "baaim") {
+                        //BA SHARPSHOOTER
+
+                        message.reply(`${message.author}\n**(BA) Aim **\n**+${bonus152025} bonus damage** when you attack an enemy at range.${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "disruptive") {
+                        //F DISRUPT
+
+                        disruptcomment = "``?r badisruptive" + mrank + wrank + "# Name``"
+
+                        message.reply(`${message.author}\n**(F) Disruptive **\nYour attacks deal **${bonus102030} SP damage** in addition to its regular damage.${comment}`)
+                            .then(setTimeout(() => {
+                                message.delete()
+                            }, 1500))
+                            .then(() => message.reply(`${message.author}\n${bacomment}(BA) Ultra Disrupt${bacommentend}${disruptcomment}`))
+                            .catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "baultradisruptive") {
+                        //BA DISRUPT
+
+                        total = bonus102030 * 2
+
+                        message.reply(`${message.author}\n**(BA) Ultra Disruptive **\nDisruptive damage doubled.\nDeal **${total} SP damage** in addition to your attacks' damage.${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "versatile") {
+
+                        versatilecomment = "``?r baversatile" + mrank + wrank + "# Name``"
+
+                        message.reply(`${message.author}\n**(F) Versatile **\nApply the Heal/Buff/Power effects to 2 targets instead of 3 and apply the last charge to one of them.${comment}`)
+                            .then(setTimeout(() => {
+                                message.delete()
+                            }, 1500))
+                            .then(() => message.reply(`${message.author}\n${bacomment}(F) Versatile${bacommentend}${versatilecomment}`))
+                            .catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "baversatile") {
+
+                        message.reply(`${message.author}\n**(BA) Versatile **\nRoll both AoE Heal and Buff (or both Power variants) and decide whether each target gets the rolled heal or buff effect.${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "overheal") {
+
+                        message.reply(`${message.author}\n**(P) Overheal **\nWhen receiving heals or healing others, you or your allies may go **${bonus203040}** above their max HP.${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "bacure" || args[0].toLowerCase() === "cure") {
+
+                        var roll1 = roll(1, 6)
+                        var total = roll1 + 2
+
+                        message.reply(`${message.author}\n**(BA) Cure **\nCure (${roll1} + 2) = **${total} conditions**.\nIf AoE was used, distribute the cure charges in any amount between up to 3 targets.${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "baboost" || args[0].toLowerCase() === "boost") {
+
+                        message.reply(`${message.author}\n**(BA) Boost **\**+2 extra movements** to an ally when you target them with an action.${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "extension") {
+
+                        message.reply(`${message.author}\n**(BA) Extension **\nYou have **+2 range** this cycle.${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "hyperawareness") {
+                        //F HYPERAWARENESS
+
+                        hacomment = "``?r bahyperawareness" + mrank + wrank + "# Name``"
+
+                        message.reply(`${message.author}\n**(F) Hyper Awareness **\nMake your awareness checks with advantage.${comment}`)
+                            .then(setTimeout(() => {
+                                message.delete()
+                            }, 1500))
+                            .then(() => message.reply(`${message.author}\n${bacomment}(BA) Hyper Awareness${bacommentend}${hacomment}`))
+                            .catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "bahyperawareness") {
+
+                        message.reply(`${message.author}\n**(BA) Hyperawareness **\n**+${bonus101520}** to attacks and buffs, **+${bonus51015}** to heal per square of distance, starting from the square adjacent to you and ending on the target's.${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "momentum") {
+                        //F MOMENTUM
+
+                        var total = 0
+
+                        var mods = [];
+                        var modtotal = 0;
+
+                        if (arguments.length > 3) {
+                            for (var i = 3; i < arguments.length; i++) {
+                                mods.push(arguments[i])
+                                modtotal += parseInt(arguments[i])
+                            }
+                        }
+
+                        total = parseInt(modtotal) * 5
+
+                        message.reply(`${message.author}\n**(F) Momentum**\n(${modtotal} * 5) = **+${total} bonus damage**${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "rover") {
+
+                        rovalcomment = "``?r barover" + mrank + wrank + "# Name``"
+
+                        message.reply(`${message.author}\n**(P) Rover **\nAll damage resulting from moving is halved.${comment}`)
+                            .then(setTimeout(() => {
+                                message.delete()
+                            }, 1500))
+                            .then(() => message.reply(`${message.author}\n${bacomment}(BA) Rover${bacommentend}${rovercomment}`))
+                            .catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "barover") {
+
+                        message.reply(`${message.author}\n**(BA) Rover **\nYou may split your movements, allowing you to move → act → move.${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "bamaneuver" || args[0].toLowerCase() === "maneuver") {
+
+                        message.reply(`${message.author}\n**(BA) Maneuver **\nIgnore difficult terrain and all movement-based damage this cycle.${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "regeneration") {
+
+                      var x = 0 + bonus123
+                      var z = 0 + bonus123
+                      var total = 0
+                      var burstdisplay = []
+                      var burstcount = 0;
+
+                      var mods = [];
+                      var modtotal = 0;
+
+                      for (var i = 0; i < x; i++) {
+                          var y = roll(1, 20)
+                          total += y
+                          burstdisplay.push(y)
+                          if (y === 20) {
+                              x += 1
+                              burstcount = x - z;
+                          }
+                          if (x === 50) {
+                              break;
+                          }
+                      }
+
+                      if (arguments.length > 3) {
+                          for (var i = 3; i < arguments.length; i++) {
+                              mods.push(arguments[i])
+                              modtotal += parseInt(arguments[i])
+                          }
+                      }
+
+                      var modstring = mods.join(" + ")
+                      var burststring = burstdisplay.join(" + ")
+                      var plus = " + "
+                      if (!mods.length) {
+                          var moddisplay = ""
+                      } else {
+                          var moddisplay = plus.concat(modstring)
+                      }
+
+                        regencomment = "``?r baregen" + mrank + wrank + "# Name``"
+                        bacomment2 = "\n***Regen and give an ally the same amount. Or, forgo the regen and give an ally double that amount.*"
+
+                        message.reply(`${message.author}\n**(F) Regeneration**\n(${burststring}) = ${total}\nRegenerate **${total} HP**.${comment}`)
+                            .then(setTimeout(() => {
+                                message.delete()
+                            }, 1500))
+                            .then(() => message.reply(`${message.author}\n${bacomment}(BA) Regeneration${bacommentend}${regencomment}${bacomment2}`))
+                            .catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "baregeneration") {
+
+                        message.reply(`${message.author}\n**(BA) Regeneration **\nRegain the rolled HP and grant an ally the same amount, or forgo your own regeneration and grant an ally double the rolled HP.${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "infuse") {
+
+                        message.reply(`${message.author}\n**(F) Infuse **\n**+${bonus51015} HP** to your [Defense] action target(s).${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "bacoordinate" || args[0].toLowerCase() === "coordinate") {
+
+                        message.reply(`${message.author}\n**(BA) Coodinate **\nBoth you and an ally gain **${bonus51525}** to attacks, heals, or buffs.${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "guardian") {
+
+                        message.reply(`${message.author}\n**(F) Guardian **\nMitigate **12 damage** to yourself or allies when you target them via an action or a BA.${comment}`)
+                        .then(setTimeout(() => {
+                            message.delete()
+                        }, 1500))
+                        .then(() => message.reply(`${message.author}\nIf AoE was used, distribute the reduction in any amount between up to 3 targets`))
+                        .catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "basavior") {
+
+                        message.reply(`${message.author}\n**(BA) Savior **\nGive 3 targets within range **${bonus51525}** to a save roll next cycle.${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "baberserk") {
+
+                        message.reply(`${message.author}\n**(BA) Berserk **\nGain up to **${bonus204060}** damage worth of bonus to attacks, heals, or buffs.${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "corruption") {
+
+                      var x = 0 + bonus123
+                      var z = 0 + bonus123
+                      var total = 0
+                      var burstdisplay = []
+                      var burstcount = 0;
+
+                      var mods = [];
+                      var modtotal = 0;
+
+                      for (var i = 0; i < x; i++) {
+                          var y = roll(1, 20)
+                          total += y
+                          burstdisplay.push(y)
+                          if (y === 20) {
+                              x += 1
+                              burstcount = x - z;
+                          }
+                          if (x === 50) {
+                              break;
+                          }
+                      }
+
+                      if (arguments.length > 3) {
+                          for (var i = 3; i < arguments.length; i++) {
+                              mods.push(arguments[i])
+                              modtotal += parseInt(arguments[i])
+                          }
+                      }
+
+                      var modstring = mods.join(" + ")
+                      var burststring = burstdisplay.join(" + ")
+                      var plus = " + "
+                      if (!mods.length) {
+                          var moddisplay = ""
+                      } else {
+                          var moddisplay = plus.concat(modstring)
+                      }
+
+                      var suppresscomment = "\n**→** to negate corruption damage, use:\n``(BA) Suppress Corruption # Name``"
+                      var tcheck = Math.ceil(total / 2)
+
+                      if (total % 2 == 0) {
+                          //The number is even
+                          message.reply(`${message.author}\n**(F) Corruption **\n(${burststring}) = ${total}\n**+${total}** to attacks, heals, or buffs. **+${tcheck}** to checks.\nCorruption suppressed.${comment}`).then(setTimeout(() => {
+                              message.delete()
+                          }, 1500)).catch(err => console.log(err));
+                      } else {
+                          //The number is odd
+                          message.reply(`${message.author}\n**(F) Corruption **\n(${burststring}) = ${total}\n**+${total}** to attacks, heals, or buffs. **+${tcheck}** to checks.\nCorruption advances, lose **${total} HP**...${comment}`)
+                          .then(setTimeout(() => {
+                              message.delete()
+                          }, 1500))
+                          .then(() => message.reply(`${message.author}${suppresscomment}`))
+                          .catch(err => console.log(err));
+                      }
+
+                    } else if (args[0].toLowerCase() === "exceed10") {
+
+                        message.reply(`${message.author}\n**(BA) Exceed **\n**+20** to attacks, buffs, and heals. **-10 HP**${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "exceed25") {
+
+                        message.reply(`${message.author}\n**(BA) Exceed **\nGain advantage on a save. **-25 HP**${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "exceed50") {
+
+                        message.reply(`${message.author}\n**(BA) Exceed **\nGain advantage on an attack. **-50 HP**\n*If you are using critical attack: use ?r critical then ?r critical2. For any other attack, use the commands twice and take the higher one.*${comment}`).then(setTimeout(() => {
+                            message.delete()
+                        }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "exceed100") {
+
+                          message.reply(`${message.author}\n**(BA) Exceed **\nYou may perform a non-special action. **-100 HP**${comment}`).then(setTimeout(() => {
+                              message.delete()
+                          }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "charge") {
+
+                          var total = 0
+
+                          var mods = [];
+                          var modtotal = 0;
+
+                          if (arguments.length > 3) {
+                              for (var i = 3; i < arguments.length; i++) {
+                                  mods.push(arguments[i])
+                                  modtotal += parseInt(arguments[i])
+                              }
+                          }
+
+                          total = parseInt(modtotal)
+
+                          unloadcomment = "``(BA) Unload Charge # " + total + " | Name``"
+                          holdcomment = "``(BA) Hold Charge # " + total + " | Name``"
+
+                          message.reply(`${message.author}\n**(F) Charge**\nAdd **${bonus51525}** to a charge pool.\nCurrent Charge: ${total}${comment}`)
+                              .then(setTimeout(() => {
+                                  message.delete()
+                              }, 1500))
+                              .then(() => message.reply(`${message.author}\n${bacomment}(BA) Unload${bacommentend}${unloadcomment}\n${bacomment}(BA) Hold${bacommentend}${holdcomment}`))
+                              .catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "twice") {
+
+                          message.reply(`${message.author}\n**(Medium Armor) Twice **\nYou may perform 2 main actions and 1 bonus action this cycle.${comment}`).then(setTimeout(() => {
+                              message.delete()
+                          }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "immortal") {
+
+                          message.reply(`${message.author}\n**(Heavy Armor) Immortal **\nYour HP resets to 1 and you are immune to all damages this turn.\nSecond Wind has been disabled.${comment}`).then(setTimeout(() => {
+                              message.delete()
+                          }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "secondwind") {
+
+                          message.reply(`${message.author}\n**(Heavy Armor) Second Wind **\nGain 10 + 10 HP per AR at the start of your turn.\nImmortal has been disabled.${comment}`).then(setTimeout(() => {
+                              message.delete()
+                          }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "surge") {
+
+                          message.reply(`${message.author}\n**(Light Armor) Surge **\nPick one then copy and paste your choice:\n**→** Gain a +25 bonus per AR to any Xd20 or Xd100 rolls.\n**→** Gain +2 haste or movement per AR\n**→** Revive 1 target per AR anywhere on the map as long as you can see them\n**→** Gain +6 to inspire rolls per AR${comment}`).then(setTimeout(() => {
+                              message.delete()
+                          }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "autoassist") {
+
+                            message.reply(`${message.author}\n**(BA) Auto Assist **\n**+15** to attacks, heals, buffs, checks, contributions, and saves.${comment}`).then(setTimeout(() => {
+                                message.delete()
+                            }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "consistent") {
+
+                            message.reply(`${message.author}\n**(BA) Consistent **\nForgo rolling and take **50** for every **d100** you must roll.${comment}`).then(setTimeout(() => {
+                                message.delete()
+                            }, 1500)).catch(err => console.log(err));
+
+                    } else if (args[0].toLowerCase() === "risky") {
+
+                            message.reply(`${message.author}\n**(BA) Risky **\nBefore rolling, convert your non-mr/wr modifiers.\nEach **+13** becomes an extra **d20** and each **+50** becomes an extra **d100**.${comment}`).then(setTimeout(() => {
+                                message.delete()
+                            }, 1500)).catch(err => console.log(err));
+
+                        }
+
+                    //end here
+                }
+            }
+        }
+    }
+}
